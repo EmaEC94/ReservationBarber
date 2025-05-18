@@ -1,0 +1,47 @@
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.deps.json
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.dll
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.pdb
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.AssemblyInfoInputs.cache
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.AssemblyInfo.cs
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.csproj.CoreCompileInputs.cache
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.dll
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\refint\CRM.Utilities.dll
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.pdb
+C:\Users\Tavo\Documents\Code\Pro\SOARSA-CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\ref\CRM.Utilities.dll
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.deps.json
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.dll
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.pdb
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.AssemblyInfoInputs.cache
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.AssemblyInfo.cs
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.csproj.CoreCompileInputs.cache
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.sourcelink.json
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.dll
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\refint\CRM.Utilities.dll
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.pdb
+C:\Users\Tavo\Documents\Code\Pro\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\ref\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.deps.json
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.pdb
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.AssemblyInfoInputs.cache
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.AssemblyInfo.cs
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.csproj.CoreCompileInputs.cache
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.sourcelink.json
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\refint\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.pdb
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel 2020\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\ref\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.deps.json
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\bin\Debug\net8.0\CRM.Utilities.pdb
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.AssemblyInfoInputs.cache
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.AssemblyInfo.cs
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.csproj.CoreCompileInputs.cache
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.sourcelink.json
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\refint\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\CRM.Utilities.pdb
+C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\CRM.Utilities\obj\Debug\net8.0\ref\CRM.Utilities.dll

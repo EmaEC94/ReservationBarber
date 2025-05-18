@@ -1,0 +1,18 @@
+
+# Visual Studio
+.vs/
+
+CRM.API/bin
+CRM.API/obj
+
+CRM.Application/bin
+CRM.Application/obj
+
+
+CRM.Domain/bin
+CRM.Domain/obj
+
+CRM.Infrastructure/bin
+CRM.Infrastructure/obj
+
+

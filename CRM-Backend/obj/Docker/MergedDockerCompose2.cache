@@ -1,0 +1,64 @@
+name: dockercompose2100850489244640534
+services:
+  crm.api:
+    build:
+      context: C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend
+      dockerfile: CRM.API/Dockerfile
+    depends_on:
+      mysql-db:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+      DB_HOST: mysql-db
+      DB_NAME: ' SEE_VUI1'
+      DB_SA_PASSWORD: Pass@Docker$$2024
+    image: crmapi
+    networks:
+      crmnetwork: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8080"
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        published: "8081"
+        protocol: tcp
+      - mode: ingress
+        target: 8080
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\Emanuel\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\Emanuel\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  mysql-db:
+    container_name: app-mysql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: Pass@Docker$$2024
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      crmnetwork: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "1436"
+        protocol: tcp
+networks:
+  crmnetwork:
+    name: dockercompose2100850489244640534_crmnetwork

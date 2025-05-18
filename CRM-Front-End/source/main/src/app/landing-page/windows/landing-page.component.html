@@ -1,0 +1,147 @@
+<main>
+  <section class="slider">
+      <div class="list">
+          <div class="item active">
+              <div class="image" style="--url: url('/assets/images/barber/slider.jpg')"></div>
+              <div class="content">
+                  <h2>Destiny Barber</h2>
+                  <p>
+                      Nulla magna irure incididunt irure nisi laboris adipisicing adipisicing ad aliquip exercitation sit duis.
+                  </p>
+                  <p>
+                      Ex irure minim eiusmod tempor cillum consectetur ullamco.
+                  </p>
+              </div>
+          </div>
+          <div class="item ">
+              <div class="image" style="--url: url('/assets/images/pages/2.jpg')"></div>
+              <div class="content">
+                  <h2>Destiny Barber</h2>
+                  <p>
+                      Nulla magna irure incididunt irure nisi laboris adipisicing adipisicing ad aliquip exercitation sit duis.
+                  </p>
+                  <p>
+                      Ex irure minim eiusmod tempor cillum consectetur ullamco.
+                  </p>
+              </div>
+          </div>
+          <div class="item">
+              <div class="image" style="--url: url('/assets/images/pages/3.jpg')"></div>
+              <div class="content">
+                  <h2>Destiny Barber</h2>
+                  <p>
+                      Nulla magna irure incididunt irure nisi laboris adipisicing adipisicing ad aliquip exercitation sit duis.
+                  </p>
+                  <p>
+                      Ex irure minim eiusmod tempor cillum consectetur ullamco.
+                  </p>
+              </div>
+          </div>
+      </div>
+      <div class="arrows">
+          <button id="prev">
+            back
+          </button>
+          <button mat-icon-button (click)="nextBtnSlider()" matTooltip="Delete Task">
+            <mat-icon>home</mat-icon>
+          </button>
+      </div>
+  </section>
+  <section class="second-slider flex-center">
+    <div class="box-card padding-item">
+        <mat-card>
+          <mat-card-header>
+            <img mat-card-avatar src="assets/images/user/user3.jpg">
+              <mat-card-title>Corte & Barba</mat-card-title>
+              <mat-card-subtitle>Costo 8000 colones</mat-card-subtitle>
+            </mat-card-header>
+            <img class="box-card" mat-card-image src="assets/images/barber/IMG_2.png">
+              <mat-card-content>
+                <p>Corte & Barba</p>
+              </mat-card-content>
+              <mat-divider></mat-divider>
+              <mat-card-actions>
+                <div fxLayout="row">
+                  <button mat-icon-button>
+                    <mat-icon class="col-blue">Agendar</mat-icon>
+                  </button>
+                  <button mat-icon-button>
+                    <mat-icon class="col-red">favorite</mat-icon>
+                  </button>
+                  <span fxFlex></span>
+                  <button mat-button>
+                    details
+                  </button>
+                  <button mat-button>
+                    save
+                  </button>
+                </div>
+              </mat-card-actions>
+        </mat-card>
+    </div>
+    <div class="box-card padding-item">
+        <mat-card>
+          <mat-card-header>
+            <img mat-card-avatar src="assets/images/user/user3.jpg">
+              <mat-card-title>Corte & Barba</mat-card-title>
+              <mat-card-subtitle>Costo 8000 colones</mat-card-subtitle>
+            </mat-card-header>
+            <img class="box-card" mat-card-image src="assets/images/barber/IMG_3.png">
+              <mat-card-content>
+                <p>Corte & Barba</p>
+              </mat-card-content>
+              <mat-divider></mat-divider>
+              <mat-card-actions>
+                <div fxLayout="row">
+                  <button mat-icon-button>
+                    <mat-icon class="col-blue">Agendar</mat-icon>
+                  </button>
+                  <button mat-icon-button>
+                    <mat-icon class="col-red">favorite</mat-icon>
+                  </button>
+                  <span fxFlex></span>
+                  <button mat-button>
+                    details
+                  </button>
+                  <button mat-button>
+                    save
+                  </button>
+                </div>
+              </mat-card-actions>
+        </mat-card>
+    </div>
+    <div class="box-card padding-item">
+      <mat-card>
+        <mat-card-header>
+          <img mat-card-avatar src="assets/images/user/user3.jpg">
+            <mat-card-title>Corte & Barba</mat-card-title>
+            <mat-card-subtitle>Costo 8000 colones</mat-card-subtitle>
+          </mat-card-header>
+          <img class="box-card" mat-card-image src="assets/images/barber/IMG1.png">
+            <mat-card-content>
+              <p>Corte & Barba</p>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+            
+ 
+                <button (click)="agendarCorte()" mat-mini-fab color="primary">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button (click)="agendarCorte()" matTooltip="Delete Task">
+                  <mat-icon>home</mat-icon>
+                </button>
+                <a class="navbar-brand" routerLink="dashboard/main">
+                  <a class="logo-box flex-logo" href="index.html">
+                    <img class="img-logo" src="assets/images/barber/logo.png" /> <span
+                    class="logo-name">Barber Destiny</span></a>
+                </a>
+         
+            </mat-card-actions>
+      </mat-card>
+  </div>
+  </section>
+  <section class="cards-items flex-center">
+
+  </section>
+</main>
