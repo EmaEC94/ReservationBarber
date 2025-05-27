@@ -13,10 +13,10 @@ export class BarberService {
   private users = [
     {
       id: 1,
-      username: 'admin@lorax.com',
+      username: 'barberDestiny@gmail.com',
       password: 'admin',
-      firstName: 'Sarah',
-      lastName: 'Smith',
+      firstName: 'Barber admin',
+      lastName: 'Destiny',
       token: 'admin-token',
     },
   ];

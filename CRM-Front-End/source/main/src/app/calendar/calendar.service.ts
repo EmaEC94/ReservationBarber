@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { Calendar, ICRMCalendarResponse, URL_CRM_REGISTER_RESERVATION, URL_CRM_RESERVATION } from './calendar.model';
+import { Calendar, ICRMBarber, ICRMBarberResponse, ICRMCalendarResponse, URL_CRM_GET_ALL_BARBER, URL_CRM_GET_ALL_FREE_TIME_BARBER, URL_CRM_REGISTER_RESERVATION, URL_CRM_RESERVATION } from './calendar.model';
 import {
   HttpClient,
   HttpHeaders,
@@ -25,6 +25,7 @@ export class CalendarService {
   dataChange: BehaviorSubject<Calendar[]> = new BehaviorSubject<Calendar[]>([]);
   dialogData!: Calendar;
   reservationCalendar!: Calendar;
+  barberList:ICRMBarber[] = [];
   ReservatioCalendarData!: ICRMCalendarResponse;
 
 
@@ -40,15 +41,62 @@ export class CalendarService {
   }
 
   /** CRUD Methods */
-
-  /** GET: Fetch all calendars */
+  /** GET: Fetch all barber of Destiny */
   // getReservation(): r<Calendar[]> {
   //   return this.httpClient
   //     .get<Calendar[]>(this.API_URL)
   //     .pipe(catchError(this.errorHandler));
   // }
 
+  
+  async getBarber(): Promise<ICRMBarberResponse>{
+      
+      const response = await fetch(URL_CRM_GET_ALL_BARBER);
+  
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      const barberListResult = await response.json();
+      this.barberList = barberListResult;
  
+      return new Promise((resolve, reject) => {
+        if (resolve) {       
+           resolve(barberListResult);
+        } else {
+           reject(-1);
+        }
+     });
+  }
+  async getBarberFreeTime(daySelected: Date, userId: number): Promise<ICRMBarberResponse>{
+      
+    const body = {
+        daySelected: daySelected.toISOString().split('T')[0], // formato YYYY-MM-DD
+        userId: userId
+      };
+
+      const response = await fetch(URL_CRM_GET_ALL_FREE_TIME_BARBER, {
+        method: 'POST', // o 'PUT' si aplica
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      const barberListResult = await response.json();
+      this.barberList = barberListResult;
+ 
+      return new Promise((resolve, reject) => {
+        if (resolve) {       
+           resolve(barberListResult);
+        } else {
+           reject(-1);
+        }
+     });
+
+
+  }
   async getReservation(): Promise<ICRMCalendarResponse>{
       
       const response = await fetch(URL_CRM_RESERVATION);

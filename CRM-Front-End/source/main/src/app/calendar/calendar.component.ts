@@ -17,7 +17,7 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { Calendar, es, ICRMCalendarResponse } from './calendar.model';
+import { Calendar, es, ICRMBarber, ICRMBarberResponse, ICRMCalendarResponse } from './calendar.model';
 import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component';
 import { CalendarService } from './calendar.service';
 import {
@@ -70,6 +70,8 @@ export class CalendarComponent
   dialogTitle: string;
   filterOptions = 'All';
   calendarData!: Calendar;
+  barberList:ICRMBarberResponse[] = [];
+  barberListFreeTime:ICRMBarberResponse[] = [];
   ReservatioCalendarData!: ICRMCalendarResponse;
   filterItems: string[] = [
     'work',
@@ -149,18 +151,39 @@ export class CalendarComponent
   }
 
   addNewEvent() {
+     let barberListData:ICRMBarber [] = [];
+
+    this.calendarService.getBarber().then((resultBarbers) =>{
+    this.barberList = Array.isArray(resultBarbers) ? resultBarbers : [resultBarbers];
+
+    });
+
+    const daySelected = new Date("2025-05-22");
+   
+    this.calendarService.getBarberFreeTime(daySelected,1).then((result) =>{
+      this.barberListFreeTime = Array.isArray(result) ? result : [result]; 
+      console.log(this.barberListFreeTime);
+    });
+   
+
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
       tempDirection = 'rtl';
     } else {
       tempDirection = 'ltr';
     }
+
+    this.barberList.forEach((resultData)=>{
+      barberListData = resultData.data;
+    });
+
     const dialogRef = this.dialog.open(FormDialogComponent, {
       width: '60vw',
       maxWidth: '100vw',
       data: {
         calendar: this.calendar,
         action: 'add',
+        barberList: barberListData
       },
       direction: tempDirection,
     });

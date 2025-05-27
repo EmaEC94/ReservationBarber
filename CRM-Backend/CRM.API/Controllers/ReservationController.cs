@@ -70,10 +70,10 @@ namespace CRM.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetReservationAvailble/{daySelected}/{userId}")]
-        public async Task<IActionResult> GetReservationAvailble(DateOnly daySelected,int userId)
+        [HttpGet("GetReservationAvailble")]
+        public async Task<IActionResult> GetReservationAvailble([FromBody] ReservationAvaibleRequest request)
         {
-            var response = await _reservationApplication.ListReservationHourAvailble(daySelected, userId);
+            var response = await _reservationApplication.ListReservationHourAvailble(request.DaySelected, request.UserId);
             return Ok(response);
         }
     }

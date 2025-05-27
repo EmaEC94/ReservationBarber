@@ -139,10 +139,10 @@ namespace CRM.Application.Services
 
             account.Password = BC.HashPassword("user123");
 
-            if (requestDto.Image is not null)
-            {
-                account.Image = await _azureStorage.SaveFile(AzureContainers.USERS, requestDto.Image);
-            }
+            //if (requestDto.Image is not null)
+            //{
+            //    account.Image = await _azureStorage.SaveFile(AzureContainers.USERS, requestDto.Image);
+            //}
 
             response.Data = await _unitOfWork.User.RegisterAsync(account);
 

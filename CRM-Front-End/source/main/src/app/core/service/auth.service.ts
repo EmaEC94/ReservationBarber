@@ -13,10 +13,10 @@ export class AuthService {
   private users = [
     {
       id: 1,
-      username: 'admin@lorax.com',
+      username: 'barberDestiny@gmail.com',
       password: 'admin',
-      firstName: 'Sarah',
-      lastName: 'Smith',
+      firstName: 'Barber Admin',
+      lastName: 'Destiny',
       token: 'admin-token',
     },
   ];

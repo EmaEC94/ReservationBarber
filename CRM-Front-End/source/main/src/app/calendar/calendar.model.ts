@@ -45,6 +45,22 @@ export interface ICRMCalendarResponse{
 
 }
 
+export interface ICRMBarber{
+id: number;
+description: string;
+}
+
+export interface ICRMBarberFreeTime{
+  availableHour: Date;
+}
+export interface ICRMBarberResponse{
+  isSuccess: boolean;
+  data: any;
+  totalRecords: number;
+  message: string;
+  error: any;
+
+}
 export const es = {
   code: 'es',
   week: {
@@ -68,3 +84,5 @@ export const es = {
 
 export const URL_CRM_RESERVATION = `${environment.apiCrm}api/Reservation`;
 export const URL_CRM_REGISTER_RESERVATION = `${environment.apiCrm}api/Reservation/Register`;
+export const URL_CRM_GET_ALL_BARBER = `${environment.apiCrm}api/User/Select`;
+export const URL_CRM_GET_ALL_FREE_TIME_BARBER = `${environment.apiCrm}api/Reservation/GetReservationAvailble`;

@@ -14,7 +14,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Calendar } from '../../calendar.model';
+import { Calendar, ICRMBarber } from '../../calendar.model';
 import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
@@ -25,11 +25,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 export interface DialogData {
   id: number;
   action: string;
   calendar: Calendar;
+  barberList: ICRMBarber[]
 }
 
 @Component({
@@ -37,6 +39,7 @@ export interface DialogData {
   templateUrl: './form-dialog.component.html',
   styleUrls: ['./form-dialog.component.scss'],
   imports: [
+    CommonModule,
     MatButtonModule,
     MatIconModule,
     MatDialogContent,
@@ -56,6 +59,10 @@ export class FormDialogComponent {
   dialogTitle: string;
   calendarForm: UntypedFormGroup;
   calendar: Calendar;
+  barberList:ICRMBarber[] = [];
+  UserBarber!:ICRMBarber;
+  UserBarberId!:number;
+  
   showDeleteBtn: boolean;
 
   constructor(
@@ -78,7 +85,18 @@ export class FormDialogComponent {
 
     // Initialize the form
     this.calendarForm = this.createCalendarForm();
+ 
+    this.barberList = Array.isArray(data.barberList) ? data.barberList : [];
   }
+ngOnInit() {
+  console.log(this.barberList);
+
+  // Correct way to set the value of the form control
+  //this.calendarForm.get('UserBarberId')?.setValue(1);
+
+  // Or this alternative syntax:
+  // this.calendarForm.controls['UserBarberId'].setValue(2);
+}
 
   createCalendarForm(): UntypedFormGroup {
     return this.fb.group({
@@ -87,7 +105,7 @@ export class FormDialogComponent {
       Note: [this.calendar.note],
       Message: [this.calendar.message, [Validators.required]],
       Apointment: [this.calendar.apointment, [Validators.required]],
-      //UserBarberId: [this.calendar.userBarberId],
+      UserBarberId: [this.UserBarberId],
       //ClientId: [this.calendar.clientId],
       Price: [this.calendar.price],
       Payment: [this.calendar.payment],
