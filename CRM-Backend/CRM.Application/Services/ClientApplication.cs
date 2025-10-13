@@ -9,7 +9,9 @@ using CRM.Application.Interfaces;
 using CRM.Domain.Entities;
 using CRM.Infrastructure.Persistences.Interfaces;
 using CRM.Utilities.Static;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.EntityFrameworkCore;
+using BC = BCrypt.Net.BCrypt;
 
 namespace CRM.Application.Services
 {
@@ -137,19 +139,21 @@ namespace CRM.Application.Services
             try
             {
                 var client = _mapper.Map<Client>(requestDto);
+                client.Password = BC.HashPassword(requestDto.Password);
+
                 response.Data = await _unitOfWork.Client.RegisterAsync(client);
                 response.IsSuccess = true;
                 response.Message = ReplyMessage.MESSAGE_SAVE;
-
             }
             catch (Exception ex)
             {
-                response.IsSuccess = false;
+                response.IsSuccess = false;  
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
                 WatchDog.WatchLogger.Log(ex.Message);
             }
             return response;
         }
+
 
         public async Task<BaseResponse<bool>> EditClient(int clientId, ClientRequestDto requestDto)
         {

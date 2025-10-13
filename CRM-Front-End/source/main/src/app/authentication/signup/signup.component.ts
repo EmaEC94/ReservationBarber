@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgClass } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '@core';
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
@@ -27,7 +28,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private serviceAuth:AuthService
   ) {}
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -44,8 +46,11 @@ export class SignupComponent implements OnInit {
     return this.loginForm.controls;
   }
   onSubmit() {
+    console.log('onSubmit');
+
     this.submitted = true;
     // stop here if form is invalid
+
     if (this.loginForm.invalid) {
       return;
     } else {

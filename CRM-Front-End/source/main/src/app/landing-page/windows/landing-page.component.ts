@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag, CdkDragHandle, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
-import { UntypedFormGroup, UntypedFormControl, UntypedFormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { UntypedFormGroup, UntypedFormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { LandingPage } from '../landing-page.model';
-import { NgClass, DatePipe } from '@angular/common';
-import { NgScrollbar } from 'ngx-scrollbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -17,7 +15,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { CalendarService } from 'app/calendar/calendar.service';
+import { ICRMServicios } from 'app/calendar/calendar.model';
+/*import { MapInfoWindow, MapMarker, GoogleMapsModule } from '@angular/google-maps';*/
 
 @Component({
     selector: 'app-landing-page',
@@ -55,6 +56,7 @@ export class LandingPageComponent implements OnInit {
    lastPosition = this.items.length - 1;
    firstPosition = 0;
    active = 0;
+   serviceList:ICRMServicios[] = [];
 
 
   breadscrums = [
@@ -65,7 +67,7 @@ export class LandingPageComponent implements OnInit {
     },
   ];
 
-  constructor(private fb: UntypedFormBuilder, private http: HttpClient,  private router: Router,) {
+  constructor(private fb: UntypedFormBuilder, private http: HttpClient,  private router: Router, public calendarService: CalendarService) {
     const blank = {} as LandingPage;
     this.taskForm = this.createFormGroup(blank);
 
@@ -75,7 +77,12 @@ export class LandingPageComponent implements OnInit {
   }
   ngOnInit(): void {
     this.setDiameter();
-
+    
+   /* this.calendarService.geAlltServices().subscribe((responseServices) =>{
+      this.serviceList = responseServices;
+      console.log(this.serviceList);
+    })
+*/
   }
 
 

@@ -19,20 +19,8 @@
         "DASHBOARD3": "Tablero 3"
       }
     },
-    "ADVANCE-TABLE": {
-      "TEXT": "Tabla de avance"
-    },
-    "APPS": {
-      "TEXT": "-- Aplicaciones"
-    },
     "CALENDAR": {
       "TEXT": "Calendario"
-    },
-    "TASK": {
-      "TEXT": "Tarea"
-    },
-    "LANDING": {
-      "TEXT": "Home"
     },
     "CONTACTS": {
       "TEXT": "Contactos"
@@ -43,25 +31,6 @@
         "INBOX": "Bandeja de entrada",
         "COMPOSE": "Componer",
         "READ": "Leer el correo electrónico"
-      }
-    },
-    "MORE-APPS": {
-      "TEXT": "Más aplicaciones",
-      "LIST": {
-        "CHAT": "Charla",
-        "SUPPORT": "Apoyo",
-        "DRAG-DROP": "Arrastrar y soltar",
-        "CONTACT-GRID": "Cuadrícula de contacto"
-      }
-    },
-    "COMPONENTS": {
-      "TEXT": "-- Componentes"
-    },
-    "WIDGETS": {
-      "TEXT": "Widgets",
-      "LIST": {
-        "CHART-WIDGET": "Widget de gráfico",
-        "DATA-WIDGET": "Widget de datos"
       }
     },
     "FORMS": {

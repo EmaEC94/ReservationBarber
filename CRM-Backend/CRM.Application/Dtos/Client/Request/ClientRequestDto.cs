@@ -11,6 +11,10 @@
         public string? Phone { get; set; }
         public bool SendNotifications { get; set; }
         public int State { get; set; }
+
+        public string? UserName { get; set; }
+
+        public string? Password { get; set; }
         public List<ActivePauseRequestDto> ActivePauseIds { get; set; } = new();
     }
 

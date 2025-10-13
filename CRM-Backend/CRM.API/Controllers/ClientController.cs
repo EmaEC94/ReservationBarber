@@ -47,7 +47,7 @@ namespace CRM.API.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterClient([FromBody] ClientRequestDto requestDto)
         {
-            var response = await _clientApplication.RegisterClient(requestDto);
+             var response = await _clientApplication.RegisterClient(requestDto);
             return Ok(response);
         }
 

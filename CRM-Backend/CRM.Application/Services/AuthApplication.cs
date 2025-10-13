@@ -79,9 +79,39 @@ namespace CRM.Application.Services
                 var user = await _unitOfWork.User.UserByEmail(requestDto.Email);
                 if (user == null)
                 {
-                    response.IsSuccess = false;
-                    response.Message = ReplyMessage.MESSAGE_TOKEN_ERROR;
-                    return response;
+
+                    var client = await _unitOfWork.Client.UserByEmail(requestDto.Email!);
+
+                    if (client == null)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = ReplyMessage.MESSAGE_TOKEN_ERROR;
+                        return response;
+                    }
+                    //client.PasswordResetToken != requestDto.Toke ||
+                    if (client.TokenExpiration < DateTime.UtcNow)
+                    {
+                        response.IsSuccess = false;
+                        response.Message = ReplyMessage.MESSAGE_TOKEN_ERROR;
+                        return response;
+                    }
+                    string passwordHash = BC.HashPassword(requestDto.Password);
+
+                    if (BC.Verify(requestDto.Password, client.Password))
+                    {
+                        response.IsSuccess = true;
+                        response.Data = GenerateTokenClient(client);
+                        response.Message = ReplyMessage.MESSAGE_TOKEN;
+                        return response;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.Message = ReplyMessage.MESSAGE_LOGIN_FAIL;
+                        return response;
+                    }
+
+
                 }
                 if (user.AuthType != authType)
                 {
@@ -98,6 +128,7 @@ namespace CRM.Application.Services
 
                     return response;
                 }
+
             }
             catch (Exception ex)
             {
@@ -211,9 +242,112 @@ namespace CRM.Application.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        private string GenerateTokenClient(Client client)
+        {
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]!));
+
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.NameId, client.Email!),
+                new Claim(JwtRegisteredClaimNames.FamilyName, client.UserName!),
+                new Claim(JwtRegisteredClaimNames.GivenName, client.Email!),
+                new Claim(JwtRegisteredClaimNames.UniqueName, client.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, Guid.NewGuid().ToString(),ClaimValueTypes.Integer64)
+
+            };
+             
+            var token = new JwtSecurityToken(
+                    issuer: _configuration["Jwt:Issuer"],
+                    audience: _configuration["Jwt:Issuer"],
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddHours(int.Parse(_configuration["Jwt:Expires"]!)),
+                    notBefore: DateTime.UtcNow,
+                    signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
         private string GenerateResetToken()
         {
             return Guid.NewGuid().ToString("N");
+        }
+
+        public async Task<BaseResponse<string>> LoginClient(TokenRequestDto requestDto, string authType)
+        {
+            var response = new BaseResponse<string>();
+
+            try
+            {
+                var client =  _unitOfWork.Client.UserByEmail(requestDto.Email);
+                if (client.Result == null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_TOKEN_ERROR;
+                    return response;
+                }
+                if (client.Result.AuthType != authType)
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_AUTH_TYPE_GOOGLE;
+                    return response;
+                }
+
+                if (BC.Verify(requestDto.Password, client.Result.Password))
+                {
+                    response.IsSuccess = true;
+                    response.Data = GenerateTokenClient(client.Result);
+                    response.Message = ReplyMessage.MESSAGE_TOKEN;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ReplyMessage.MESSAGE_EXCEPTION;
+                WatchLogger.Log(ex.Message);
+            }
+            return response;
+        }
+
+        public async Task<BaseResponse<bool>> ChangePasswordClient(ChangePasswordRequestDto requestDto)
+        {
+            var response = new BaseResponse<bool>();
+            try
+            {
+                var client = await _unitOfWork.Client.UserByEmail(requestDto.Email!);
+                if (client == null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_TOKEN_ERROR;
+                    return response;
+                }
+                if (client.PasswordResetToken != requestDto.Token || client.TokenExpiration < DateTime.UtcNow)
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_TOKEN_ERROR;
+                    return response;
+                }
+
+                client.Password = BC.HashPassword(requestDto.NewPassword);
+                client.PasswordResetToken = null;
+                client.TokenExpiration = null;
+
+                response.Data = await _unitOfWork.Client.EditAsync(client);
+                response.IsSuccess = true;
+                response.Message = ReplyMessage.MESSAGE_CHANGE_PASSWORD;
+
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ReplyMessage.MESSAGE_EXCEPTION;
+                WatchLogger.Log(ex.Message);
+            }
+            return response;
         }
     }
 }

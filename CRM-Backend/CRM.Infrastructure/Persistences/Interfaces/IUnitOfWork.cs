@@ -6,7 +6,7 @@ namespace CRM.Infrastructure.Persistences.Interfaces
 {
     public interface  IUnitOfWork : IDisposable // = Proveer un mecanismo para liberar objetos en memoria
     {
-        IGenericRepository<Client> Client { get; }
+        IClientRepository Client { get; }
         IGenericRepository<DocumentType> DocumentType { get; }
         IGenericRepository<Company> Company { get; }
         IGenericRepository<ActivePause> ActivePause { get; }

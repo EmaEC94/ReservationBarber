@@ -14,7 +14,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Calendar, ICRMBarber } from '../../calendar.model';
+import { Calendar, ICRMBarber, ICRMServicios } from '../../calendar.model';
 import {
   OwlDateTimeModule,
   OwlNativeDateTimeModule,
@@ -26,6 +26,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import * as moment from 'moment-timezone';
+import { AuthService } from '@core/service/auth.service';
 
 export interface DialogData {
   id: number;
@@ -62,13 +64,19 @@ export class FormDialogComponent {
   barberList:ICRMBarber[] = [];
   UserBarber!:ICRMBarber;
   UserBarberId!:number;
-  
+  serviceList:ICRMServicios[] = [];
   showDeleteBtn: boolean;
+  selectedBarber!: ICRMBarber;
+  selectedService!:ICRMServicios;
+  freeTimeBarber:any;
+  selectedFreeTime: any;
+  selectedDateCR:Date = new Date;
 
   constructor(
     public dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public calendarService: CalendarService,
+    public authService: AuthService,
     private fb: UntypedFormBuilder
   ) {
     // Set action and dialog title
@@ -86,27 +94,32 @@ export class FormDialogComponent {
     // Initialize the form
     this.calendarForm = this.createCalendarForm();
  
-    this.barberList = Array.isArray(data.barberList) ? data.barberList : [];
   }
-ngOnInit() {
-  console.log(this.barberList);
 
-  // Correct way to set the value of the form control
-  //this.calendarForm.get('UserBarberId')?.setValue(1);
+  ngOnInit() {
+  // Cargar barberos
+  this.calendarService.getBarber().then((resultBarbers) => {
+    this.barberList = resultBarbers.data;
+    console.log("barberList:", this.barberList);
+  });
 
-  // Or this alternative syntax:
-  // this.calendarForm.controls['UserBarberId'].setValue(2);
+   // Cargar servicios
+this.calendarService.getAllServices().subscribe((responseServices: ICRMServicios[]) => {
+  this.serviceList = responseServices;
+});
+
 }
+
 
   createCalendarForm(): UntypedFormGroup {
     return this.fb.group({
       id: [this.calendar.rervationId],
-      Tittle: [this.calendar.tittle, [Validators.required]],
+      Tittle: [this.calendar.tittle],
       Note: [this.calendar.note],
-      Message: [this.calendar.message, [Validators.required]],
+      Message: [this.calendar.message],
       Apointment: [this.calendar.apointment, [Validators.required]],
       UserBarberId: [this.UserBarberId],
-      //ClientId: [this.calendar.clientId],
+      servicioReservado: [""],
       Price: [this.calendar.price],
       Payment: [this.calendar.payment],
     });
@@ -139,29 +152,48 @@ ngOnInit() {
             },
           });
       } else {
-          const apointment = new Date(this.calendarForm.controls["Apointment"].value);
 
-        // Add new calendar event
-        const calendarParamns = {
-          ...this.calendarForm.getRawValue(),
-          Apointment: apointment,
-          UserBarberId: 2,
-          ClientId: 4,
-        };
-        this.calendarService
-          .addCalendar(calendarParamns)
-          .subscribe({
-            next: (response) => {
-              this.dialogRef.close(response); // Close dialog and return newly added doctor data
-              
-            },
-            error: (error) => {
-              console.log('Add Error:', error);
-              // Optionally display an error message to the user
-            },
-          });
+          const apointment = new Date(this.calendarForm.controls["Apointment"].value);
+          const selectedServiceReserv: ICRMServicios | undefined = this.serviceList.find( serviceItem => serviceItem.code === String(this.selectedService));
+          const dataClient:any | undefined = this.authService.getClientData();
+      
+          if(dataClient){
+          // Add new calendar event
+            const calendarParamns = {
+              ...this.calendarForm.getRawValue(),
+              Message: selectedServiceReserv?.desCorte,
+              Apointment: apointment,
+              Tittle:selectedServiceReserv?.nomCorte,
+              Price: selectedServiceReserv?.precio,
+              UserBarberId: this.UserBarberId,
+              ClientId: dataClient.unique_name,
+            };
+
+          this.calendarService
+            .addCalendar(calendarParamns)
+            .subscribe({
+              next: (response) => {
+                this.dialogRef.close({ updated: true });
+                this.dialogRef.close(response); // Close dialog and return newly added doctor data
+              },
+              error: (error) => {
+                console.log('Add Error:', error);
+                // Optionally display an error message to the user
+              },
+            });
+        }
       }
-    }
+      }
+  }
+
+  onBarberSelected(event: any): void {
+    const selectedId = event.value; // Este es el ID del barbero
+   const daySelected: Date = new Date();
+   this.UserBarber = selectedId;
+   this.UserBarberId = selectedId;
+    this.calendarService.getBarberFreeTime(daySelected,event.value).then((response)=>{
+      this.freeTimeBarber = response.data;
+    })
   }
 
   deleteEvent() {
@@ -185,7 +217,20 @@ ngOnInit() {
     }
   }
 
-  onNoClick(): void {
-    this.dialogRef.close(); // Close dialog without any action
+onNoClick(): void {
+  this.dialogRef.close(); // Close dialog without any action
+}
+
+onDateChange(event: any) {
+  //const crDate = moment(event.value).tz('America/Costa_Rica').startOf('day').toDate();
+  this.selectedDateCR = event.value;                           // <-- guardo la fecha en variable TS
+  this.calendarForm.get('Apointment')?.setValue(this.selectedDateCR);  // <-- actualizo el FormControl
+  console.log('Fecha Costa Rica seleccionada:', this.selectedDateCR);
+
+  // Si ya tienes un barbero seleccionado, cargar los horarios
+  if (this.selectedBarber) {
+    //this.loadBarberFreeTime(this.selectedBarber.id);
   }
+}
+
 }

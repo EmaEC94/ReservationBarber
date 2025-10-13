@@ -112,11 +112,11 @@ export class CalendarComponent
   loadAllReservation(){
     this.calendarService.getReservation().then((reservation)=>{
       this.ReservatioCalendarData = reservation;
-      console.log(reservation);
+      //console.log(reservation);
       this.calendarService.loadEvents(this.ReservatioCalendarData).then((events) => {
         this.calendarEvents = events;
         this.tempEvents = this.calendarEvents;
-        console.log(this.calendarEvents);
+        //console.log(this.calendarEvents);
         this.calendarOptions.events = this.calendarEvents;
 
         if (this.calendarComponent) {
@@ -153,10 +153,10 @@ export class CalendarComponent
   addNewEvent() {
      let barberListData:ICRMBarber [] = [];
 
-    this.calendarService.getBarber().then((resultBarbers) =>{
+    /*this.calendarService.getBarber().then((resultBarbers) =>{
     this.barberList = Array.isArray(resultBarbers) ? resultBarbers : [resultBarbers];
-
-    });
+    
+    }); */
 
     const daySelected = new Date("2025-05-22");
    
@@ -200,9 +200,10 @@ export class CalendarComponent
           className: this.getClassNameValue(this.calendarData.category),
           groupId: this.calendarData.category,
           details: this.calendarData.details,*/
-        });
+        }); 
         this.calendarOptions.events = this.calendarEvents;
         this.addCusForm.reset();
+        this.loadAllReservation();
         this.showNotification(
           'snackbar-success',
           'Se creo la reservación en Barber Destiny CR',

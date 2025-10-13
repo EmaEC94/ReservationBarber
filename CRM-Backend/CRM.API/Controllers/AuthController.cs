@@ -23,6 +23,15 @@ namespace CRM.API.Controllers
             return Ok(response);
         }
 
+
+        [AllowAnonymous]
+        [HttpPost("LoginClient")]
+        public async Task<IActionResult> LoginClient([FromBody] TokenRequestDto requestDto, [FromQuery] string authType)
+        {
+            var response = await _authApplication.LoginClient(requestDto, authType);
+            return Ok(response);
+        }
+
         [HttpPost("LoginWithGoogle")]
         public async Task<IActionResult> LoginWithGoogle([FromBody] string credentials, [FromQuery] string authType)
         {
@@ -31,17 +40,24 @@ namespace CRM.API.Controllers
         }
 
 
-        [HttpPost("request-password-reset")]
+        [HttpPost("requestPasswordReset")]
         public async Task<IActionResult> RequestPasswordReset(ResetPasswordRequestDto requestDto)
         {
             var response = await _authApplication.RequestPasswordReset(requestDto);
             return Ok(response);
         }
 
-        [HttpPost("change-password")]
+        [HttpPost("changePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordRequestDto requestDto)
         {
             var result = await _authApplication.ChangePassword(requestDto);
+            return Ok(result);
+        }
+
+        [HttpPost("changePasswordClient")]
+        public async Task<IActionResult> ChangePasswordClient(ChangePasswordRequestDto requestDto)
+        {
+            var result = await _authApplication.ChangePasswordClient(requestDto);
             return Ok(result);
         }
     }

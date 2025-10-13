@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { Calendar, ICRMBarber, ICRMBarberResponse, ICRMCalendarResponse, URL_CRM_GET_ALL_BARBER, URL_CRM_GET_ALL_FREE_TIME_BARBER, URL_CRM_REGISTER_RESERVATION, URL_CRM_RESERVATION } from './calendar.model';
+import { Calendar, ICRMBarber, ICRMBarberResponse, ICRMCalendarResponse, ICRMServicios, URL_CRM_GET_ALL_BARBER, URL_CRM_GET_ALL_FREE_TIME_BARBER, URL_CRM_REGISTER_RESERVATION, URL_CRM_RESERVATION } from './calendar.model';
 import {
   HttpClient,
   HttpHeaders,
@@ -110,97 +110,37 @@ export class CalendarService {
  
       return new Promise((resolve, reject) => {
         if (resolve) {       
-        /*events.map((event: any): Calendar => ({
-            ...event
-        }));*/
            resolve(events);
         } else {
            reject(-1);
         }
      });
-
-
   }
-
 
   async loadEvents(ReservatioCalendarData: ICRMCalendarResponse): Promise<EventInput[]> {
    /* const response = await fetch(this.API_URL);
     const events = await response.json();
    */
-  let resevationEvents: EventInput[] = [];
-  let reservationEvent!: EventInput;
- 
-
-
-          
+    let resevationEvents: EventInput[] = [];
+    let reservationEvent!: EventInput;
+   
     ReservatioCalendarData.data.forEach((event:Calendar) => {
-
-       reservationEvent = {
-        id: event.rervationId,
-        title: event.tittle,
-        start: new Date(event.apointment), // Make sure to parse the date string
-        end: new Date(event.apointment), // Make sure to parse the date string
-        className: event.message,
-        groupId: '1',
-        details: event.note,
-        allDay: false, // Default to false if not provided
-      };
+    reservationEvent = {
+      id: event.rervationId,
+      title: event.tittle,
+      start: new Date(event.apointment), // Make sure to parse the date string
+      end: new Date(event.apointment), // Make sure to parse the date string
+      className: event.message,
+      groupId: '1',
+      details: event.note,
+      allDay: false, // Default to false if not provided
+    };
 
       resevationEvents.push(reservationEvent);
 
     });
-
- 
-
-return resevationEvents;
-
-    /*
-    const response = await fetch(URL_CRM_RESERVATION);
-  
-    if (!response.ok) {
-      throw new Error(`Error ${response.status}: ${response.statusText}`);
-    }
     
-    const events = await response.json();
-    this.reservationCalendar = events;
-    const eventReservation:any = null;
-    return new Promise((resolve, reject) => {
-      if (resolve) {       
-      /*events.forEach((event: ICRMCalendarResponse, index:number ): any => ({
-
-         eventReservation = [{
-          id: event.data[index].rervationId,
-          title: event.data[index].rervationId,
-          start: new Date(event.data[index].Apointment), // Make sure to parse the date string
-          end: new Date(event.data[index].Apointment+1), // Make sure to parse the date string
-          className: event.data[index].Tittle,
-          groupId: event.data[index].ClientId,
-          details: event.data[index].Message,
-          allDay: false // Default to false if not provided
-      }]
-
-
-      }));
-
-
-  const eventReservations = events.map((event: ICRMCalendarResponse) => ({
-    
-      id: event.data[0].rervationId,
-      title: event.data[0].Tittle,
-      start: new Date(event.data[0].Apointment),
-      end: new Date(new Date(event.data[0].Apointment).getTime() + 60 * 60 * 1000), 
-      className: event.data[0].Message,
-      groupId: event.data[0].ClientId,
-      details: event.data[0].Note,
-      allDay: false
-    }));
-      
-
-         resolve(eventReservations);
-      } else {
-         reject(-1);
-      }
-   });*/
+    return resevationEvents;
   }
 
   /** POST: Add a new calendar */
@@ -234,6 +174,20 @@ return resevationEvents;
       catchError(this.errorHandler)
     );
   }
+
+  /*getAllServices(): Observable<ICRMServicios[]>  {
+    return this.httpClient.get<ICRMServicios[]>(`${this.API_URL}`).pipe(
+      map((response) => {
+        return response; // return the ID of the deleted doctor
+      }),
+      catchError(this.errorHandler)
+    );
+  }*/
+
+  getAllServices(): Observable<ICRMServicios[]> {
+  return this.httpClient.get<ICRMServicios[]>(this.API_URL)
+    .pipe(catchError(this.errorHandler));
+}
 
   /** Error Handler */
   private errorHandler(error: HttpErrorResponse): Observable<never> {

@@ -69,12 +69,12 @@ namespace CRM.API.Controllers
             var response = await _reservationApplication.RemoveReservation(reservationId);
             return Ok(response);
         }
-
-        [HttpGet("GetReservationAvailble")]
+        [AllowAnonymous]
+        [HttpPost("ReservationAvaibleRequest")]
         public async Task<IActionResult> GetReservationAvailble([FromBody] ReservationAvaibleRequest request)
         {
             var response = await _reservationApplication.ListReservationHourAvailble(request.DaySelected, request.UserId);
-            return Ok(response);
+             return Ok(response);
         }
     }
 }

@@ -4,13 +4,14 @@ import { AuthGuard } from '@core/guard/auth.guard';
 import { AuthLayoutComponent } from './layout/app-layout/auth-layout/auth-layout.component';
 import { Page404Component } from './authentication/page404/page404.component';
 
+/* /authentication/signin */
 export const APP_ROUTE: Route[] = [
   {
     path: '',
     component: MainLayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: '/authentication/signin', pathMatch: 'full' },
+      { path: '', redirectTo: '/landing', pathMatch: 'full' },
       {
         path: 'landing',
         loadChildren: () =>

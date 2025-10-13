@@ -15,7 +15,8 @@ namespace CRM.Infrastructure.Persistences.Repositories
         private readonly IConfiguration _configuration;
 
         public IGenericRepository<DocumentType> _documentType = null!;
-        public IGenericRepository<Client> _client = null!;
+        public IClientRepository _client = null!;
+               //IClientInterface IUnitOfWork.Client => throw new NotImplementedException();
         public IGenericRepository<Company> _company = null!;
         public IGenericRepository<ActivePause> _activePause = null!;
         public IReservationRepository _reservation = null!;
@@ -28,7 +29,7 @@ namespace CRM.Infrastructure.Persistences.Repositories
             _configuration = configuration;
         }
         public IGenericRepository<DocumentType> DocumentType => _documentType ?? new GenericRepository<DocumentType>(_context);
-        public IGenericRepository<Client> Client => _client ?? new GenericRepository<Client>(_context);
+        public IClientRepository Client => _client ?? new ClientRepository(_context);
         public IGenericRepository<Company> Company => _company ?? new GenericRepository<Company>(_context);
         public IGenericRepository<ActivePause> ActivePause => _activePause ?? new GenericRepository<ActivePause>(_context);
         public IReservationRepository Reservation => _reservation ?? new ReservationRepository(_context);
@@ -37,6 +38,7 @@ namespace CRM.Infrastructure.Persistences.Repositories
 
 
         public DbContext Context => _context;
+
 
 
         public IDbTransaction BeginTransaction()

@@ -13,7 +13,7 @@ namespace CRM.Application.Extensions
 {
     public static class InjectionExtensions
     {
-        public static IServiceCollection AddIjectionApplication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInjectionApplication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton(configuration);
 

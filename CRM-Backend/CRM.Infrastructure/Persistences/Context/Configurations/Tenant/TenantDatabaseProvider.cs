@@ -26,7 +26,6 @@ namespace CRM.Infrastructure.Persistences.Context.Configurations.Tenant
             // Esto puede ser desde un archivo de configuración, una base de datos maestra, o un servicio externo
             //"Data Source=DESKTOP-U2JP9CC\\SQLEXPRESS;Database=POS-SOARSA;User Id=sa;Password=Soa-15111989;TrustServerCertificate=True;"
 
-
             return _configuration.GetConnectionString($"Tenant_{tenant}")!;
         }
     }

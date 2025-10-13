@@ -18,12 +18,12 @@ var Cors = "Cors";
 
 
 builder.Services.AddHangfire(config =>
-    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("CRMConnection")));
+    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("Tenant_crm")));
 
 builder.Services.AddHangfireServer();
 
 builder.Services.AddInjectionInfreaestructure(Configuration);
-builder.Services.AddIjectionApplication(Configuration);
+builder.Services.AddInjectionApplication(Configuration);
 builder.Services.AddAuthentication(Configuration);
 
 builder.Services.AddControllers();
@@ -40,16 +40,12 @@ builder.Services.AddHttpContextAccessor();//Propociona al contexto de la aplicac
 builder.Services.AddCors(options =>
 {
 
-
-    options.AddPolicy(name: Cors,
-        builder =>
-        {
-            builder.WithOrigins("http://localhost:4200", "http://localhost:4201", "https://localhost:7214");
-            builder.AllowAnyMethod();
-            builder.AllowAnyHeader();
-
-        });
-
+    options.AddPolicy("AllowFrontend", builder =>
+    {
+        builder.WithOrigins("https://destinybarbercr.com", "http://localhost:4200", "http://localhost:4201", "https://localhost:7214");
+        builder.AllowAnyMethod();
+        builder.AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
@@ -76,15 +72,13 @@ using (var scope = app.Services.CreateScope())
 app.UseHangfireDashboard();
 app.UseCors(Cors);
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//Swagger
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 //app.UseWatchDogExceptionLogger();
-
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthentication();

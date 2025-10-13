@@ -11,7 +11,7 @@ export class Calendar {
   clientId: number;
   price: number;
   payment: string;
-  
+
   constructor(calendar: Calendar) {
     {
       this.rervationId = calendar.rervationId || this.getRandomID();
@@ -24,8 +24,6 @@ export class Calendar {
       this.clientId = calendar.clientId || 0;
       this.price = calendar.price || 0;
       this.payment = calendar.payment || '';
-    
-    
     }
   }
   public getRandomID(): string {
@@ -36,30 +34,35 @@ export class Calendar {
   }
 }
 
-export interface ICRMCalendarResponse{
+export interface ICRMCalendarResponse {
   isSuccess: boolean;
   data: Calendar[];
   totalRecords: number;
   message: string;
   error: any;
-
 }
 
-export interface ICRMBarber{
-id: number;
-description: string;
+export interface ICRMBarber {
+  id: number;
+  description: string;
 }
 
-export interface ICRMBarberFreeTime{
+export interface ICRMBarberFreeTime {
   availableHour: Date;
 }
-export interface ICRMBarberResponse{
+export interface ICRMBarberResponse {
   isSuccess: boolean;
   data: any;
   totalRecords: number;
   message: string;
   error: any;
+}
 
+export interface ICRMServicios {
+  code: string;
+  nomCorte: string;
+  desCorte: string;
+  precio: number;
 }
 export const es = {
   code: 'es',
@@ -82,7 +85,7 @@ export const es = {
   noEventsText: 'No hay eventos para mostrar',
 };
 
-export const URL_CRM_RESERVATION = `${environment.apiCrm}api/Reservation`;
+export const URL_CRM_RESERVATION = `${environment.apiCrm}api/Reservation?NumRecordsPage=10000`;
 export const URL_CRM_REGISTER_RESERVATION = `${environment.apiCrm}api/Reservation/Register`;
 export const URL_CRM_GET_ALL_BARBER = `${environment.apiCrm}api/User/Select`;
-export const URL_CRM_GET_ALL_FREE_TIME_BARBER = `${environment.apiCrm}api/Reservation/GetReservationAvailble`;
+export const URL_CRM_GET_ALL_FREE_TIME_BARBER = `${environment.apiCrm}api/Reservation/ReservationAvaibleRequest`;

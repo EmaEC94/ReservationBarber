@@ -13,7 +13,7 @@ namespace CRM.Infrastructure.Persistences.Context.Configurations.Tenant.Resolver
 
         public string ResolveTenant()
         {
-            var tenant = "demo"; 
+            var tenant = "crm"; 
                 //_httpContextAccessor.HttpContext?.Request.Headers["X-Tenant-ID"].FirstOrDefault();
             if (string.IsNullOrEmpty(tenant))
             {

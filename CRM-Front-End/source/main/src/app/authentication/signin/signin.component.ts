@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgClass } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+ 
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
@@ -32,7 +33,7 @@ export class SigninComponent
   constructor(
     private formBuilder: UntypedFormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService    
   ) {
     super();
   }
@@ -49,31 +50,21 @@ export class SigninComponent
   get form(): { [key: string]: AbstractControl } {
     return this.loginForm.controls;
   }
+
+
   onSubmit() {
-    this.submitted = true;
-    this.error = '';
-    if (this.loginForm.invalid) {
-      this.error = 'Username and Password not valid !';
-      return;
-    } else {
-      this.subs.sink = this.authService
-        .login(this.form['email'].value, this.form['password'].value)
-        .subscribe(
-          (res) => {
-            if (res) {
-              const token = this.authService.currentUserValue.token;
+   this.submitted = true;
+   this.authService.checkAuth(this.loginForm.value).subscribe(tokenData => {
+      
+         if (tokenData.isSuccess) {
+              const token = tokenData.data;
               if (token) {
-                this.router.navigate(['/dashboard/main']);
+                localStorage.setItem('token', token);
+                this.router.navigate(['/landing']);
               }
             } else {
               this.error = 'Invalid Login';
             }
-          },
-          (error) => {
-            this.error = error;
-            this.submitted = false;
-          }
-        );
-    }
+    });
   }
 }
