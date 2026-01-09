@@ -1,83 +1,72 @@
 ﻿CREATE OR ALTER PROCEDURE spbReservationtoHourAvailble
- @Day date,
- @UserId int
+    @Day DATE,
+    @UserId INT,
+    @DurationMinutes INT
 AS
 BEGIN
-    DECLARE @DayWithTime datetime2 = CAST(@Day AS datetime2);
-    DECLARE @DayAvailable datetime2 = DATEADD(HOUR, 8, @DayWithTime);  -- 08:00 AM
+    SET NOCOUNT ON;
+
+    DECLARE @DayStart DATETIME2 = DATEADD(HOUR, 8, CAST(@Day AS DATETIME2));  -- 08:00
+    DECLARE @DayEnd   DATETIME2 = DATEADD(HOUR, 20, CAST(@Day AS DATETIME2)); -- 20:00
 
     ------------------------------------------------------------------------------------
-    -- 1. VERIFICAR SI EL BARBERO TIENE EL DÍA COMPLETO BLOQUEADO
+    -- 1. DÍA COMPLETO BLOQUEADO
     ------------------------------------------------------------------------------------
     IF EXISTS (
-        SELECT 1 
-        FROM dbo.UserException 
+        SELECT 1
+        FROM dbo.UserException
         WHERE UserBarberId = @UserId
           AND IsFullDay = 1
           AND State = 1
-          AND CAST(StartDate AS date) = @Day
+          AND CAST(StartDate AS DATE) = @Day
     )
     BEGIN
-        -- Si el día está bloqueado, no se devuelve ninguna hora
-        SELECT CAST(NULL AS datetime2) AS AvailableHour 
-        WHERE 1 = 0;  -- Retorna tabla vacía
+        SELECT CAST(NULL AS DATETIME2) AS AvailableHour WHERE 1 = 0;
         RETURN;
     END
 
     ------------------------------------------------------------------------------------
-    -- 2. GENERAR HORAS DISPONIBLES (08:00 → 20:00)
+    -- 2. GENERAR HORAS (intervalos de 15 min)
     ------------------------------------------------------------------------------------
     ;WITH HourRange AS (
-        SELECT DATEADD(HOUR, number, @DayAvailable) AS AvailableHour
-        FROM master.dbo.spt_values
-        WHERE type = 'P'
-          AND number BETWEEN 0 AND 11  -- 12 horas
+        SELECT 
+            DATEADD(MINUTE, v.number * 15, @DayStart) AS AvailableHour,
+            DATEADD(MINUTE, v.number * 15 + @DurationMinutes, @DayStart) AS EndHour
+        FROM master.dbo.spt_values v
+        WHERE v.type = 'P'
+          AND DATEADD(MINUTE, v.number * 15 + @DurationMinutes, @DayStart) <= @DayEnd
     )
 
     ------------------------------------------------------------------------------------
-    -- 3. SELECCIONAR HORAS NO OCUPADAS POR RESERVAS O BLOQUEOS
+    -- 3. HORAS DISPONIBLES (SIN SOLAPES REALES)
     ------------------------------------------------------------------------------------
-    SELECT hr.AvailableHour, 
+    SELECT hr.AvailableHour
     FROM HourRange hr
     WHERE NOT EXISTS (
-        --------------------------------------------------------------------------------
-        -- RESERVAS OCUPADAS
-        --------------------------------------------------------------------------------
+        ----------------------------------------------------------------------
+        -- RESERVAS
+        ----------------------------------------------------------------------
         SELECT 1
         FROM dbo.Reservations r
-        WHERE r.userBarberId = @UserId
-          AND CAST(r.StartDate AS date) = @Day
-          AND CAST(hr.AvailableHour AS time) >= CAST(r.StartDate AS time)
-          AND CAST(hr.AvailableHour AS time) <  CAST(r.EndDate AS time)
+        WHERE r.UserBarberId = @UserId
+          AND CAST(r.StartDate AS DATE) = @Day   -- 👈 FILTRO CLAVE
+          AND r.State = 1
+          AND r.StartDate < hr.EndHour
+          AND r.EndDate   > hr.AvailableHour
     )
     AND NOT EXISTS (
-        --------------------------------------------------------------------------------
-        -- EXCEPCIONES (UserException): RANGOS OCUPADOS
-        --------------------------------------------------------------------------------
+        ----------------------------------------------------------------------
+        -- EXCEPCIONES PARCIALES
+        ----------------------------------------------------------------------
         SELECT 1
         FROM dbo.UserException ue
         WHERE ue.UserBarberId = @UserId
-          AND ue.State = 1              -- Solo activas
-          AND ue.IsFullDay = 0          -- Solo rangos parciales
-          AND CAST(ue.StartDate AS date) = @Day
-          AND CAST(hr.AvailableHour AS time) >= CAST(ue.StartDate AS time)
-          AND CAST(hr.AvailableHour AS time) <  CAST(ue.EndDate  AS time)
+          AND ue.State = 1
+          AND ue.IsFullDay = 0
+          AND CAST(ue.StartDate AS DATE) = @Day
+          AND ue.StartDate < hr.EndHour
+          AND ue.EndDate   > hr.AvailableHour
     )
     ORDER BY hr.AvailableHour;
 END
 GO
-
-
-/*
-DECLARE @Day AS date = '2025-12-07';  -- Día para obtener las horas disponibles
-DECLARE @UserId AS int = 1;  -- ID del userBarberId
-
-EXEC spbReservationtoHourAvailble @Day, @UserId;
-
-daySelected
-: 
-"2025-12-07"
-userId
-: 
-2
-*/
