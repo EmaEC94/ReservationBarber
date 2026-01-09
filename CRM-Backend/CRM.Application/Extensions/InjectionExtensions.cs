@@ -17,8 +17,6 @@ namespace CRM.Application.Extensions
         {
             services.AddSingleton(configuration);
 
-
-
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IOrderingQuery, OrderingQuery>();
@@ -34,6 +32,8 @@ namespace CRM.Application.Extensions
             services.AddScoped<IUserApplication, UserApplication>();
             services.AddScoped<IAuthApplication, AuthApplication>();
             services.AddScoped<IReservationApplication, ReservationApplication>();
+            services.AddScoped<ICatalogApplication, CatalogApplication>();
+            services.AddScoped<ISubCatalogApplication, SubCatalogApplication>();
 
 
 

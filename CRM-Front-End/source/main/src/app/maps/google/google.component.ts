@@ -1,89 +1,46 @@
 import { Component, ViewChild } from '@angular/core';
-import { MapInfoWindow, MapMarker, GoogleMapsModule } from '@angular/google-maps';
+import { CommonModule } from '@angular/common';
+import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 
 @Component({
-    selector: 'app-google',
-    templateUrl: './google.component.html',
-    styleUrls: ['./google.component.scss'],
-    imports: [BreadcrumbComponent, GoogleMapsModule]
+  selector: 'app-google',
+  standalone: true,
+  templateUrl: './google.component.html',
+  styleUrls: ['./google.component.scss'],
+  imports: [
+    CommonModule,          // ✅ necesario para *ngFor, *ngIf, etc.
+    BreadcrumbComponent,
+    GoogleMapsModule
+  ]
 })
 export class GoogleComponent {
   breadscrums = [
     {
-      title: 'Google Map',
+      title: 'Google Maps Destiny Barber',
       items: ['Map'],
       active: 'Google Map',
     },
   ];
 
-  // basic map start
-  display?: google.maps.LatLngLiteral;
-  center: google.maps.LatLngLiteral = {
-    lat: 24,
-    lng: 12,
-  };
-  zoom = 4;
-  moveMap(event: google.maps.MapMouseEvent) {
-    if (event.latLng != null) this.center = event.latLng.toJSON();
-  }
-  move(event: google.maps.MapMouseEvent) {
-    if (event.latLng != null) this.display = event.latLng.toJSON();
-  }
-
-  // basic map end
-
-  //add marker map start
-
-  markerOptions: google.maps.MarkerOptions = {
-    draggable: false,
-  };
-  markerPositions: google.maps.LatLngLiteral[] = [];
-  addMarker(event: google.maps.MapMouseEvent) {
-    if (event.latLng != null) this.markerPositions.push(event.latLng.toJSON());
-  }
-
-  //add marker map end
-
-  // Google Map Info Window start
-  @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
-  markerPositions1: google.maps.LatLngLiteral[] = [];
-  addMarker1(event: google.maps.MapMouseEvent) {
-    if (event.latLng != null) this.markerPositions1.push(event.latLng.toJSON());
-  }
-  openInfoWindow(marker: MapMarker) {
-    if (this.infoWindow != undefined) this.infoWindow.open(marker);
-  }
-
-  // Google Map Info Window end
-
-  // Polyline start
-  center1: google.maps.LatLngLiteral = {
-    lat: 24,
-    lng: 12,
-  };
-  zoom1 = 3;
-  vertices: google.maps.LatLngLiteral[] = [
+  locations = [
     {
-      lat: 13,
-      lng: 13,
-    },
-    {
-      lat: -13,
-      lng: 0,
-    },
-    {
-      lat: 13,
-      lng: -13,
-    },
+      name: 'Destiny Barber',
+      position: { lat: 10.3335009, lng: -84.4344862 },
+      address: 'Plaza San Carlos, Ciudad Quesada',
+      link: 'https://www.google.com/maps/place/Destiny+Barber/@10.3335009,-84.4344862'
+    }
   ];
 
-  // Polyline end
-  // trafic layer start
-  center2: google.maps.LatLngLiteral = {
-    lat: 24,
-    lng: 12,
-  };
-  zoom2 = 4;
-  // trafic layer end
+  center: google.maps.LatLngLiteral = { lat: 10.3335009, lng: -84.4344862 };
+  zoom = 17;
+
+  selected: any = null;
+
+  @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
+
+  openInfo(marker: MapMarker, loc: any) {
+    this.selected = loc;
+    this.infoWindow.open(marker);
+  }
 }

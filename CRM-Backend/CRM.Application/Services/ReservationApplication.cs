@@ -5,17 +5,13 @@ using CRM.Application.Commons.Ordering;
 using CRM.Application.Commons.Select.Response;
 using CRM.Application.Dtos.Reservation.Request;
 using CRM.Application.Dtos.Reservation.Response;
-using CRM.Application.Dtos.User.Request;
-using CRM.Application.Dtos.User.Response;
 using CRM.Application.Interfaces;
 using CRM.Domain.Entities;
 using CRM.Infrastructure.FileStorage;
 using CRM.Infrastructure.Persistences.Interfaces;
 using CRM.Utilities.Static;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using BC = BCrypt.Net.BCrypt;
 
 
 namespace CRM.Application.Services
@@ -39,15 +35,14 @@ namespace CRM.Application.Services
             var response = new BaseResponse<IEnumerable<ReservationResponseDto>>();
             try
             {
-                var reservation = _unitOfWork.Reservation.GetAllQueryable()
-                    .AsQueryable();
+                var reservation = _unitOfWork.Reservation.GetAllQueryable().AsQueryable();
 
                 if (filters.NumFilter is not null && !string.IsNullOrEmpty(filters.TextFilter))
                 {
                     switch (filters.NumFilter)
                     {
                         case 1:
-                            reservation = reservation.Where(x => x.Tittle!.Contains(filters.TextFilter));
+                            reservation = reservation.Where(x => x.Title!.Contains(filters.TextFilter));
                             break;
                         case 2:
                             reservation = reservation.Where(x => x.Message!.Contains(filters.TextFilter));
@@ -58,15 +53,21 @@ namespace CRM.Application.Services
                 {
                     reservation = reservation.Where(x => x.State.Equals(filters.StateFilter));
                 }
+               
                 if (!String.IsNullOrEmpty(filters.StartDate) && !string.IsNullOrEmpty(filters.EndDate))
                 {
                     reservation = reservation.Where(x => x.AuditCreateDate >= Convert.ToDateTime(filters.StartDate) && x.AuditCreateDate <= Convert.ToDateTime(filters.EndDate).AddDays(1));
                 }
 
+                if (filters.IdClientAuth != null)
+                {
+                    reservation = reservation.Where(x => x.ClientId.Equals(filters.IdClientAuth));
+                }
+
                 filters.Sort ??= "Id";
                 bool shouldPaginate = !filters.Download.HasValue || !filters.Download.Value;
                 var items = await _orderingQuery.Ordering(filters, reservation, shouldPaginate).ToListAsync();
-
+                
                 response.IsSuccess = true;
                 response.TotalRecords = await reservation.CountAsync();
                 response.Data = _mapper.Map<IEnumerable<ReservationResponseDto>>(items);
@@ -75,13 +76,11 @@ namespace CRM.Application.Services
             }
             catch (Exception ex)
             {
-
                 response.IsSuccess = false;
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-                WatchDog.WatchLogger.Log(ex.Message);
             }
 
-            return response;
+                return response;
         }
         public async Task<BaseResponse<IEnumerable<SelectResponse>>> ListSelectReservation()
         {
@@ -105,7 +104,7 @@ namespace CRM.Application.Services
             {
                 response.IsSuccess = false;
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-                WatchDog.WatchLogger.Log(ex.Message);
+                
             }
             return response;
         }
@@ -129,10 +128,11 @@ namespace CRM.Application.Services
             {
                 response.IsSuccess = false;
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-                WatchDog.WatchLogger.Log(ex.Message);
+          
             }
             return response;
         }
+
         public async Task<BaseResponse<bool>> RegisterReservation(ReservationRequestDto requestDto)
         {
             var response = new BaseResponse<bool>();
@@ -169,7 +169,7 @@ namespace CRM.Application.Services
             {
                 response.IsSuccess = false;
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-                WatchDog.WatchLogger.Log(ex.Message);
+               
             }
             return response;
         }
@@ -187,7 +187,7 @@ namespace CRM.Application.Services
             {
                 response.IsSuccess = false;
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-                WatchDog.WatchLogger.Log(ex.Message);
+              
             }
             return response;
         }
@@ -208,7 +208,7 @@ namespace CRM.Application.Services
             {
                 response.IsSuccess = false;
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-                WatchDog.WatchLogger.Log(ex.Message);
+              
             }
            // return response;
         }
@@ -236,7 +236,7 @@ namespace CRM.Application.Services
             {
                 response.IsSuccess = false;
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-                WatchDog.WatchLogger.Log(ex.Message);
+       
             }
             return Task.FromResult(response);
 
@@ -256,7 +256,7 @@ namespace CRM.Application.Services
 
 
                     response.IsSuccess = true;
-                    response.Message = ReplyMessage.MESSAGE_DELETE;
+                    response.Message = ReplyMessage.MESSAGE_QUERY;
                     return Task.FromResult(response);
                 }
 
@@ -265,7 +265,7 @@ namespace CRM.Application.Services
             {
                 response.IsSuccess = false;
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-                WatchDog.WatchLogger.Log(ex.Message);
+        
             }
             return Task.FromResult(response);
         }

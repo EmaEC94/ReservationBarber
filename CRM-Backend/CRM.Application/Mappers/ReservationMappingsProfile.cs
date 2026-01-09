@@ -23,7 +23,7 @@ namespace CRM.Application.Mappers
             .ReverseMap();
 
             CreateMap<Reservation, SelectResponse>()
-           .ForMember(x => x.Description, x => x.MapFrom(y => y.Tittle))
+           .ForMember(x => x.Description, x => x.MapFrom(y => y.Title))
            .ReverseMap();
 
             CreateMap<Reservation, ReservationResponseDto>()

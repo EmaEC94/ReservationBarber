@@ -50,7 +50,6 @@ namespace CRM.Application.Services
             {
                 response.IsSuccess = false;
                 response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-                WatchDog.WatchLogger.Log(ex.Message);
             }
             return response;
         }

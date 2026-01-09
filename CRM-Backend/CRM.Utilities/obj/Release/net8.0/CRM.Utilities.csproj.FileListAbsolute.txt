@@ -1,0 +1,12 @@
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\bin\Release\net8.0\CRM.Utilities.deps.json
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\bin\Release\net8.0\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\bin\Release\net8.0\CRM.Utilities.pdb
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\obj\Release\net8.0\CRM.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\obj\Release\net8.0\CRM.Utilities.AssemblyInfoInputs.cache
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\obj\Release\net8.0\CRM.Utilities.AssemblyInfo.cs
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\obj\Release\net8.0\CRM.Utilities.csproj.CoreCompileInputs.cache
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\obj\Release\net8.0\CRM.Utilities.sourcelink.json
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\obj\Release\net8.0\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\obj\Release\net8.0\refint\CRM.Utilities.dll
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\obj\Release\net8.0\CRM.Utilities.pdb
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\CRM.Utilities\obj\Release\net8.0\ref\CRM.Utilities.dll

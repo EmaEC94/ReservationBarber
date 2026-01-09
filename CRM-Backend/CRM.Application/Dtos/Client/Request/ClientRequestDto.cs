@@ -15,12 +15,6 @@
         public string? UserName { get; set; }
 
         public string? Password { get; set; }
-        public List<ActivePauseRequestDto> ActivePauseIds { get; set; } = new();
-    }
-
-    public class ActivePauseRequestDto
-    {
-        public string Description { get; set; } = null!;
     }
 
 

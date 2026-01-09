@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRM.Infrastructure", "CRM.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRM.Utilities", "CRM.Utilities\CRM.Utilities.csproj", "{114D454B-879E-4733-9A42-C32F6863A221}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{95B3CB43-30D3-423B-AC67-E0AA97284D9F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,10 +43,6 @@ Global
 		{114D454B-879E-4733-9A42-C32F6863A221}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{114D454B-879E-4733-9A42-C32F6863A221}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{114D454B-879E-4733-9A42-C32F6863A221}.Release|Any CPU.Build.0 = Release|Any CPU
-		{95B3CB43-30D3-423B-AC67-E0AA97284D9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{95B3CB43-30D3-423B-AC67-E0AA97284D9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{95B3CB43-30D3-423B-AC67-E0AA97284D9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{95B3CB43-30D3-423B-AC67-E0AA97284D9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

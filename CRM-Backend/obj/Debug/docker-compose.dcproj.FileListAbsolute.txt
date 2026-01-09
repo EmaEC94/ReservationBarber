@@ -109,3 +109,4 @@ C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-
 C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
 C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 C:\Users\Emanuel\Documents\Proyectos Emanuel Esquivel\Proyectos Emanuel\CRM\Crm-Backend\obj\Debug\docker-c.35A3FFBA.Up2Date
+C:\Users\Emanuel\Documents\ReservationBarber\CRM-Backend\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache

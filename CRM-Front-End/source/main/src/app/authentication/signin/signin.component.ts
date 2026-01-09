@@ -63,7 +63,7 @@ export class SigninComponent
                 this.router.navigate(['/landing']);
               }
             } else {
-              this.error = 'Invalid Login';
+              this.error = 'Usuario o contraseña incorrectas!';
             }
     });
   }

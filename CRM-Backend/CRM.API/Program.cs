@@ -48,6 +48,22 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Configure(builder.Configuration.GetSection("Kestrel"));
+    options.ConfigureHttpsDefaults(httpsOptions =>
+    {
+        // Carga tu PFX explícitamente
+        httpsOptions.ServerCertificate = new System.Security.Cryptography.X509Certificates.X509Certificate2(
+            @"C:\certs\localhost.pfx",
+            "MiPassword123"
+        );
+
+        Console.WriteLine($"Certificado cargado: {httpsOptions.ServerCertificate?.Thumbprint}");
+    });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -67,33 +83,33 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
-
+// Dashboard de Hangfire
 app.UseHangfireDashboard();
-app.UseCors(Cors);
 
-//Swagger
+// Swagger
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
-//app.UseWatchDogExceptionLogger();
-app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseRouting();
+
+// CORS debe ir aquí, dentro del pipeline de routing y antes de auth
+app.UseCors("AllowFrontend");
+
+//Autenticación primero
 app.UseAuthentication();
 
+//Luego autorización
 app.UseAuthorization();
 
+//Luego los controladores
 app.MapControllers();
 
-/*app.UseWatchDog(configuration =>
-{
-    configuration.WatchPageUsername = Configuration.GetSection("WatchDog:UserName").Value;
-    configuration.WatchPagePassword = Configuration.GetSection("WatchDog:Password").Value;
-});*/
 
-using (var scope = app.Services.CreateScope())
+
+/*using (var scope = app.Services.CreateScope())
 {
     var jobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
     jobManager.AddOrUpdate<NotificationApplication>(
@@ -101,7 +117,7 @@ using (var scope = app.Services.CreateScope())
         service => service.SendNotificationActivePause(),
         Cron.Minutely);
 }
-
+*/
 app.MapHangfireDashboard();
 
 app.Run();

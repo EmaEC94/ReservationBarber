@@ -9,6 +9,8 @@ namespace CRM.Infrastructure.Persistences.Interfaces
         IClientRepository Client { get; }
         IGenericRepository<DocumentType> DocumentType { get; }
         IGenericRepository<Company> Company { get; }
+        IGenericRepository<Catalog> Catalog { get; }
+        IGenericRepository<SubCatalog> SubCatalog { get; }
         IGenericRepository<ActivePause> ActivePause { get; }
         IReservationRepository Reservation { get; }
         IUserRepository User { get; }

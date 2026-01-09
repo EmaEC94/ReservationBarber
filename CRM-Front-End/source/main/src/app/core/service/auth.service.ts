@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpResponse,
+} from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, throwError } from 'rxjs';
 import { User } from '../models/user';
-import { ICRMAuthResponse, URL_CRM_LOGIN_AUTH } from 'app/authentication/signin/model/auth';
 import { jwtDecode } from 'jwt-decode';
+import {
+  ICRMAuthResponse,
+  URL_CRM_LOGIN_AUTH,
+  URL_CRM_REGISTER_AUTH,
+} from '@core/models/auth';
 export interface ClientToken {
-  nameid: string;        // Email
-  family_name: string;   // Nombre de usuario
-  given_name: string;    // Email otra vez
-  unique_name: string;   // Id del cliente
+  nameid: string; // Email
+  family_name: string; // Nombre de usuario
+  given_name: string; // Email otra vez
+  unique_name: string; // Id del cliente
   jti: string;
   iat: string;
 }
@@ -43,8 +51,9 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-
-    const user = this.users.find((u) => u.username === username && u.password === password);
+    const user = this.users.find(
+      (u) => u.username === username && u.password === password
+    );
 
     if (!user) {
       return this.error('Username or password is incorrect');
@@ -60,6 +69,7 @@ export class AuthService {
       });
     }
   }
+
   ok(body?: {
     id: number;
     username: string;
@@ -75,30 +85,37 @@ export class AuthService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     this.currentUserSubject.next(this.currentUserValue);
     return of({ success: false });
   }
-    checkAuth(tokenRequestDto: any): Observable<ICRMAuthResponse> {
-      return this.http.post<ICRMAuthResponse>(URL_CRM_LOGIN_AUTH,tokenRequestDto).pipe(
-        catchError(this.errorHandler)
-      );
-    }
 
-    private errorHandler(error: HttpErrorResponse): Observable<never> {
-      let errorMessage = '';
-      if (error.error instanceof ErrorEvent) {
-        // Client-side error
-        errorMessage = `Error: ${error.error.message}`;
-      } else {
-        // Server-side error
-        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      }
-      console.error(errorMessage);
-      return throwError(() => new Error(errorMessage));
+  checkAuth(tokenRequestDto: any): Observable<ICRMAuthResponse> {
+    return this.http
+      .post<ICRMAuthResponse>(URL_CRM_LOGIN_AUTH, tokenRequestDto)
+      .pipe(catchError(this.errorHandler));
   }
 
-getToken(): string | null {
+  registerClient(tokenRequestDto: any): Observable<ICRMAuthResponse> {
+    return this.http
+      .post<ICRMAuthResponse>(URL_CRM_REGISTER_AUTH, tokenRequestDto)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  private errorHandler(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
+  }
+
+  getToken(): string | null {
     return localStorage.getItem('token');
   }
 
@@ -110,7 +127,6 @@ getToken(): string | null {
     localStorage.removeItem('token');
   }
 
-  
   getClientData(): ClientToken | null {
     const token = this.getToken();
     if (!token) return null;
@@ -123,7 +139,9 @@ getToken(): string | null {
   }
 
   getClientId(): number | null {
-    return this.getClientData() ? Number(this.getClientData()!.unique_name) : null;
+    return this.getClientData()
+      ? Number(this.getClientData()!.unique_name)
+      : null;
   }
 
   getClientEmail(): string | null {
@@ -133,5 +151,4 @@ getToken(): string | null {
   getClientName(): string | null {
     return this.getClientData()?.family_name ?? null;
   }
-
 }

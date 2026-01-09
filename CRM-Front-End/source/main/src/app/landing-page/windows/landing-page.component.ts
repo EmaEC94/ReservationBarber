@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { UntypedFormGroup, UntypedFormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { LandingPage } from '../landing-page.model';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -21,28 +26,27 @@ import { ICRMServicios } from 'app/calendar/calendar.model';
 /*import { MapInfoWindow, MapMarker, GoogleMapsModule } from '@angular/google-maps';*/
 
 @Component({
-    selector: 'app-landing-page',
-    templateUrl: './landing-page.component.html',
-    styleUrls: ['./landing-page.component.scss'],
-    imports: [
-        MatDividerModule,
-        MatCardModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatTooltipModule,
-        MatIconModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        MatOptionModule,
-        MatDatepickerModule
-    ]
+  selector: 'app-landing-page',
+  templateUrl: './landing-page.component.html',
+  styleUrls: ['./landing-page.component.scss'],
+  imports: [
+    MatDividerModule,
+    MatCardModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatTooltipModule,
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatDatepickerModule,
+  ],
 })
 export class LandingPageComponent implements OnInit {
-
   taskForm: UntypedFormGroup;
   showFiller = false;
   isNewEvent = false;
@@ -50,14 +54,13 @@ export class LandingPageComponent implements OnInit {
   userImg?: string;
   tasks: LandingPage[] = [];
 
-   items = document.querySelectorAll('.slider .list .item');
-   prevBtn = document.getElementById('prev');
-   nextBtn = document.getElementById('next');
-   lastPosition = this.items.length - 1;
-   firstPosition = 0;
-   active = 0;
-   serviceList:ICRMServicios[] = [];
-
+  items = document.querySelectorAll('.slider .list .item');
+  prevBtn = document.getElementById('prev');
+  nextBtn = document.getElementById('next');
+  lastPosition = this.items.length - 1;
+  firstPosition = 0;
+  active = 0;
+  serviceList: ICRMServicios[] = [];
 
   breadscrums = [
     {
@@ -67,7 +70,12 @@ export class LandingPageComponent implements OnInit {
     },
   ];
 
-  constructor(private fb: UntypedFormBuilder, private http: HttpClient,  private router: Router, public calendarService: CalendarService) {
+  constructor(
+    private fb: UntypedFormBuilder,
+    private http: HttpClient,
+    private router: Router,
+    public calendarService: CalendarService
+  ) {
     const blank = {} as LandingPage;
     this.taskForm = this.createFormGroup(blank);
 
@@ -77,50 +85,45 @@ export class LandingPageComponent implements OnInit {
   }
   ngOnInit(): void {
     this.setDiameter();
-    
-   /* this.calendarService.geAlltServices().subscribe((responseServices) =>{
+
+    this.calendarService.getAllServiceDB().then((response) => {
+      const responseServices = response.data;
       this.serviceList = responseServices;
-      console.log(this.serviceList);
-    })
-*/
+    });
   }
 
-
-  nextBtnSlider(){
+  nextBtnSlider() {
     this.active = this.active + 1;
     this.setSlider();
   }
 
-
   setSlider() {
     let oldActive = document.querySelector('.slider .list .item.active');
-    if(oldActive) oldActive.classList.remove('active');
+    if (oldActive) oldActive.classList.remove('active');
     this.items[this.active].classList.add('active');
-    // 
+    //
     this.nextBtn!.classList.remove('d-none');
     this.prevBtn!.classList.remove('d-none');
 
-    if(this.active == this.lastPosition) this.nextBtn!.classList.add('d-none');
-    if(this.active == this.firstPosition) this.prevBtn!.classList.add('d-none');
-}
+    if (this.active == this.lastPosition) this.nextBtn!.classList.add('d-none');
+    if (this.active == this.firstPosition)
+      this.prevBtn!.classList.add('d-none');
+  }
 
+  setDiameter() {
+    let slider = document.querySelector('.slider');
+    let widthSlider = 1200;
+    let heightSlider = 1200;
+    let diameter = Math.sqrt(
+      Math.pow(widthSlider, 2) + Math.pow(heightSlider, 2)
+    );
+    document.documentElement.style.setProperty('--diameter', diameter + 'px');
+  }
 
-
- setDiameter (){
-  let slider = document.querySelector('.slider');
-  let widthSlider = 1200;
-  let heightSlider = 1200;
-  let diameter = Math.sqrt(Math.pow(widthSlider, 2) + Math.pow(heightSlider, 2));
-  document.documentElement.style.setProperty('--diameter', diameter+'px');
-}
- 
-agendarCorte(){
-  console.log("EMa")
-  this.router.navigate(['/calendar'])
-
-}
-
-
+  agendarCorte() {
+    console.log('EMa');
+    this.router.navigate(['/calendar']);
+  }
 
   fetch(cb: (i: LandingPage[]) => void) {
     const req = new XMLHttpRequest();
@@ -135,6 +138,7 @@ agendarCorte(){
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
+  
   toggle(task: { done: boolean }, nav: MatSidenav) {
     nav.close();
     task.done = !task.done;
@@ -203,7 +207,4 @@ agendarCorte(){
     };
     return S4() + S4();
   }
-
 }
-
-

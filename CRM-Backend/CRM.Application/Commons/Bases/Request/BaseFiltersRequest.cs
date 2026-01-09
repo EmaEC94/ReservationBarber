@@ -7,6 +7,8 @@
         public int? StateFilter { get; set; } = null;
         public string? StartDate { get; set; } = null;
         public string? EndDate { get; set; } = null;
-        public bool? Download { get; set; } = null; //Descargue excel 
+        public bool? Download { get; set; } = null;  
+        public int? IdClientAuth { get; set; } = null;  
+
     }
 }

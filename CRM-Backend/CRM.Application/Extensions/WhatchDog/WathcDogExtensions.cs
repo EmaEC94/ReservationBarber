@@ -12,7 +12,7 @@ namespace CRM.Application.Extensions.WhatchDog
         {
             services.AddWatchDogServices(options =>
             {
-                options.SetExternalDbConnString = configuration.GetConnectionString("CRMConnectionServer");
+                options.SetExternalDbConnString = configuration.GetConnectionString("Tenant_crm");
                 options.SqlDriverOption = WatchDogSqlDriverEnum.MSSQL;
                 options.IsAutoClear = true;
                 options.ClearTimeSchedule = WatchDogAutoClearScheduleEnum.Daily;

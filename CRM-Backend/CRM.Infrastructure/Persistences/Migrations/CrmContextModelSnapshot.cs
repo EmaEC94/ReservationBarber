@@ -74,6 +74,46 @@ namespace CRM.Infrastructure.Persistences.Migrations
                     b.ToTable("ActivePause");
                 });
 
+            modelBuilder.Entity("CRM.Domain.Entities.Catalog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AuditCreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AuditCreateUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditDeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditDeleteUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditUpdateUser")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Catalog");
+                });
+
             modelBuilder.Entity("CRM.Domain.Entities.Client", b =>
                 {
                     b.Property<int>("Id")
@@ -104,6 +144,9 @@ namespace CRM.Infrastructure.Persistences.Migrations
                     b.Property<int?>("AuditUpdateUser")
                         .HasColumnType("int");
 
+                    b.Property<string>("AuthType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
@@ -120,10 +163,19 @@ namespace CRM.Infrastructure.Persistences.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
+                    b.Property<DateTime?>("LastPasswordChangedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasMaxLength(20)
@@ -135,6 +187,12 @@ namespace CRM.Infrastructure.Persistences.Migrations
 
                     b.Property<int>("State")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("TokenExpiration")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -307,9 +365,6 @@ namespace CRM.Infrastructure.Persistences.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Apointment")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
@@ -331,6 +386,9 @@ namespace CRM.Infrastructure.Persistences.Migrations
                     b.Property<int?>("ClientId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
@@ -348,23 +406,31 @@ namespace CRM.Infrastructure.Persistences.Migrations
                     b.Property<short>("Price")
                         .HasColumnType("smallint");
 
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("State")
                         .HasColumnType("int");
 
-                    b.Property<string>("Tittle")
+                    b.Property<int>("SubCatalogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .IsUnicode(false)
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<int>("userBarberId")
+                    b.Property<int>("UserBarberId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("userBarberId");
+                    b.HasIndex("SubCatalogId");
+
+                    b.HasIndex("UserBarberId");
 
                     b.ToTable("Reservations");
                 });
@@ -386,6 +452,60 @@ namespace CRM.Infrastructure.Persistences.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("CRM.Domain.Entities.SubCatalog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AuditCreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AuditCreateUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditDeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditDeleteUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditUpdateUser")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CatalogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeOnly?>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CatalogId");
+
+                    b.ToTable("SubCatalog");
                 });
 
             modelBuilder.Entity("CRM.Domain.Entities.User", b =>
@@ -444,6 +564,61 @@ namespace CRM.Infrastructure.Persistences.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CRM.Domain.Entities.UserException", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AuditCreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AuditCreateUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditDeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditDeleteUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditUpdateUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsFullDay")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserBarberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserBarberId");
+
+                    b.ToTable("UserException");
                 });
 
             modelBuilder.Entity("CRM.Domain.Entities.UserRole", b =>
@@ -525,15 +700,45 @@ namespace CRM.Infrastructure.Persistences.Migrations
                         .WithMany()
                         .HasForeignKey("ClientId");
 
+                    b.HasOne("CRM.Domain.Entities.SubCatalog", "SubCatalog")
+                        .WithMany()
+                        .HasForeignKey("SubCatalogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CRM.Domain.Entities.User", "userBarber")
                         .WithMany()
-                        .HasForeignKey("userBarberId")
+                        .HasForeignKey("UserBarberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");
 
+                    b.Navigation("SubCatalog");
+
                     b.Navigation("userBarber");
+                });
+
+            modelBuilder.Entity("CRM.Domain.Entities.SubCatalog", b =>
+                {
+                    b.HasOne("CRM.Domain.Entities.Catalog", "Catalog")
+                        .WithMany()
+                        .HasForeignKey("CatalogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Catalog");
+                });
+
+            modelBuilder.Entity("CRM.Domain.Entities.UserException", b =>
+                {
+                    b.HasOne("CRM.Domain.Entities.User", "UserBarber")
+                        .WithMany()
+                        .HasForeignKey("UserBarberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserBarber");
                 });
 
             modelBuilder.Entity("CRM.Domain.Entities.UserRole", b =>

@@ -1,72 +1,66 @@
 <main>
   <section class="slider">
-        <header>
-        <div class="left">
-            <h1 class="title-txt">Barber Destiny CR</h1>
+    <header>
+      <div class="left">
+        <h1 class="title-txt">Barber Destiny CR</h1>
+      </div>
+      <div class="author">
+        <h3>EESQUIVEL</h3>
+        <div>
+          <p>Made with Love</p>
+          <p>Refrescate con un corte.</p>
         </div>
-        <div class="author">
-            <h3>EESQUIVEL</h3>
-            <div >
-                <p>Made with Love</p>
-                <p>Refrescate con un corte.</p>
-            </div>
-            <div>
-                <p>Code by SolfWolf CR</p>
-                <p>Develop</p>
-            </div>
-           
-        </div>
+      </div>
     </header>
     <div class="banner">
-        <div class="product">
-            <div class="soda" style="--url: url(assets/images/pages/bg.png)">
-            </div>
-            <div class="soda" style="--url: url(assets/images/pages/prueba.png)">
-            </div>
-        </div>
+      <div class="product">
+        <div class="soda" style="--url: url(assets/images/pages/bg.png)"></div>
+        <div
+          class="soda"
+          style="--url: url(assets/images/pages/prueba.png)"
+        ></div>
+      </div>
 
-        <div class="rock">
-            <img src="assets/images/pages/rock1.png" alt="">
-            <img src="assets/images/pages/rock2.png" alt="">
-            <img class="img-aspiral" src="assets/images/pages/aspiral.png" alt="">
-        </div>
+      <div class="rock">
+        <img src="assets/images/pages/rock1.png" alt="" />
+        <img src="assets/images/pages/rock2.png" alt="" />
+        <img class="img-aspiral" src="assets/images/pages/aspiral.png" alt="" />
+      </div>
     </div>
   </section>
   <section>
-  <div class="second-slider">
-    <div class="display-flex-center">
-      @for (item of serviceList; track item.code) {
-      <div class="box-card">
+    <div class="second-slider">
+      <div class="display-flex-center">
+        @for (item of serviceList; track item.code) {
+        <div class="box-card">
           <mat-card>
             <mat-card-header>
-              <img mat-card-avatar src="assets/images/user/user3.jpg">
-                <mat-card-title>{{item.nomCorte}}</mat-card-title>
-              </mat-card-header>
-              <img class="img-size"  src="assets/images/barber/IMG_2.png">
-                <mat-card-content>
-                  <p>{{item.desCorte}}</p> <br>
-                   <p> Valor: ₡{{item.precio}}</p>
-                </mat-card-content>
-                <mat-divider></mat-divider>
-                <mat-card-actions>
-                  <div>
-                    <button mat-icon-button>
-                      <mat-icon class="col-blue">Agendar</mat-icon>
-                    </button>
-                  </div>
-                </mat-card-actions>
+              <img mat-card-avatar src="assets/images/user/user3.jpg" />
+              <mat-card-title>{{ item.description }}</mat-card-title>
+            </mat-card-header>
+            <img class="img-size" src="assets/images/barber/IMG_2.png" />
+            <mat-card-content>
+              <p>{{ item.name }}</p>
+              <br />
+              <p>Valor: ₡{{ item.price }}</p>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              <div>
+                <button mat-icon-button>
+                  <mat-icon class="col-blue">Agendar</mat-icon>
+                </button>
+              </div>
+            </mat-card-actions>
           </mat-card>
+        </div>
+        }
       </div>
-      }
-     </div> 
     </div>
-    </section>
-    <section>
+  </section>
+</main>
 <footer class="barber-footer">
   <div class="footer-content">
-<!--
-    
--->
     <div class="footer-links">
       <h4>Enlaces</h4>
       <a href="#">Inicio</a>
@@ -78,28 +72,25 @@
     <div class="footer-contact">
       <h4>Contacto</h4>
       <p><mat-icon>phone</mat-icon> +506 8888-8888</p>
-      <p><mat-icon>email</mat-icon>  </p>
+      <p><mat-icon>email</mat-icon></p>
       <p><mat-icon>location_on</mat-icon> San José, Costa Rica</p>
     </div>
 
     <div class="footer-social">
       <h4>Síguenos</h4>
       <a href="#"><mat-icon>facebook</mat-icon></a>
-      <a href="https://www.instagram.com/destiny___barber/"><mat-icon>instagram</mat-icon></a>
+      <a href="https://www.instagram.com/destiny___barber/"
+        ><mat-icon>instagram</mat-icon></a
+      >
       <a href="#"><mat-icon>tiktok</mat-icon></a>
     </div>
-    
+
     <div class="footer-logo">
       <h2>Barber Destiny CR</h2>
       <p>Refrescate con un corte de calidad</p>
     </div>
   </div>
-
   <div class="footer-bottom">
     <p>© 2025 Barber Destiny CR. Todos los derechos reservados.</p>
   </div>
 </footer>
-
-    </section>
- 
-</main>

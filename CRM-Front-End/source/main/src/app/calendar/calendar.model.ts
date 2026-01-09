@@ -1,29 +1,33 @@
 import { formatDate } from '@angular/common';
 import { number } from 'echarts';
-import { environment } from 'environments/environment.development';
+import { environment } from 'environments/environment.prod';
 export class Calendar {
   rervationId: string;
-  tittle: string;
+  title: string;
   note: string;
   message: string | undefined;
-  apointment: string;
+  startDate!: Date | string;
+  endDate?: Date | string | null;
   userBarberId: number;
   clientId: number;
   price: number;
   payment: string;
+  subCatalogId: number;
+  selectedFreeTime: string;
 
   constructor(calendar: Calendar) {
     {
       this.rervationId = calendar.rervationId || this.getRandomID();
-      this.tittle = calendar.tittle || '';
-      this.apointment = calendar.apointment
-        ? new Date(calendar.apointment).toISOString()
-        : new Date().toISOString();
+      this.title = calendar.title || '';
+      this.startDate = calendar.startDate ? new Date(calendar.startDate) : new Date();
+      this.endDate = calendar.endDate ? new Date(calendar.endDate) : new Date();
       this.note = calendar.note || '';
       this.userBarberId = calendar.userBarberId || 0;
       this.clientId = calendar.clientId || 0;
       this.price = calendar.price || 0;
       this.payment = calendar.payment || '';
+      this.subCatalogId = calendar.subCatalogId || 0;
+      this.selectedFreeTime = calendar.selectedFreeTime || '';
     }
   }
   public getRandomID(): string {
@@ -34,9 +38,28 @@ export class Calendar {
   }
 }
 
+export interface ICRMServicios {
+  subCatalogId: number;
+  catalogId: number;
+  name: string;
+  code: string;
+  price: number;
+  description: string;
+  state: number;
+  stateSubCatalog: string;
+  duration: string; 
+}
+
 export interface ICRMCalendarResponse {
   isSuccess: boolean;
   data: Calendar[];
+  totalRecords: number;
+  message: string;
+  error: any;
+}
+export interface ICRMReservationResponse {
+  isSuccess: boolean;
+  data: Calendar;
   totalRecords: number;
   message: string;
   error: any;
@@ -50,7 +73,7 @@ export interface ICRMBarber {
 export interface ICRMBarberFreeTime {
   availableHour: Date;
 }
-export interface ICRMBarberResponse {
+export interface ICRMResponse {
   isSuccess: boolean;
   data: any;
   totalRecords: number;
@@ -58,12 +81,6 @@ export interface ICRMBarberResponse {
   error: any;
 }
 
-export interface ICRMServicios {
-  code: string;
-  nomCorte: string;
-  desCorte: string;
-  precio: number;
-}
 export const es = {
   code: 'es',
   week: {
@@ -85,7 +102,9 @@ export const es = {
   noEventsText: 'No hay eventos para mostrar',
 };
 
-export const URL_CRM_RESERVATION = `${environment.apiCrm}api/Reservation?NumRecordsPage=10000`;
+export const URL_CRM_RESERVATION = `${environment.apiCrm}api/Reservation`; //?NumRecordsPage=10000
 export const URL_CRM_REGISTER_RESERVATION = `${environment.apiCrm}api/Reservation/Register`;
 export const URL_CRM_GET_ALL_BARBER = `${environment.apiCrm}api/User/Select`;
 export const URL_CRM_GET_ALL_FREE_TIME_BARBER = `${environment.apiCrm}api/Reservation/ReservationAvaibleRequest`;
+export const URL_CRM_GET_ALL_RESERVATION_BY_ID = `${environment.apiCrm}api/Reservation`;
+export const URL_CRM_GET_ALL_SERVICES = `${environment.apiCrm}api/SubCatalog`;

@@ -1,12 +1,7 @@
 ﻿using CRM.Application.Commons.Bases.Request;
 using CRM.Application.Dtos.Reservation.Request;
-using CRM.Application.Dtos.User.Request;
 using CRM.Application.Interfaces;
-using CRM.Application.Services;
-using CRM.Domain.Entities;
-using CRM.Utilities.Static;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.API.Controllers
@@ -35,6 +30,7 @@ namespace CRM.API.Controllers
             }
             return Ok(response);
         }
+
         [HttpGet("Select")]
         public async Task<IActionResult> ListSelectreservation()
         {
@@ -42,8 +38,8 @@ namespace CRM.API.Controllers
             return Ok(response);
         }
 
-        [AllowAnonymous]
         [HttpPost("Register")]
+        //[Authorize]
         public async Task<IActionResult> RegisterReservation([FromBody] ReservationRequestDto requestDto)
         {
             var response = await _reservationApplication.RegisterReservation(requestDto);
@@ -56,6 +52,7 @@ namespace CRM.API.Controllers
             var response = await _reservationApplication.ReservationById(reservationId);
             return Ok(response);
         }
+
         [HttpPut("Edit/{reservationId}")]
         public async Task<IActionResult> EditReservation(int reservationId, [FromForm] ReservationRequestDto requestDto)
         {
@@ -69,7 +66,7 @@ namespace CRM.API.Controllers
             var response = await _reservationApplication.RemoveReservation(reservationId);
             return Ok(response);
         }
-        [AllowAnonymous]
+   
         [HttpPost("ReservationAvaibleRequest")]
         public async Task<IActionResult> GetReservationAvailble([FromBody] ReservationAvaibleRequest request)
         {

@@ -17,7 +17,13 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { Calendar, es, ICRMBarber, ICRMBarberResponse, ICRMCalendarResponse } from './calendar.model';
+import {
+  Calendar,
+  es,
+  ICRMBarber,
+  ICRMResponse,
+  ICRMCalendarResponse,
+} from './calendar.model';
 import { FormDialogComponent } from './dialogs/form-dialog/form-dialog.component';
 import { CalendarService } from './calendar.service';
 import {
@@ -42,6 +48,8 @@ import {
   OwlNativeDateTimeModule,
 } from '@danielmoncada/angular-datetime-picker';
 import { MatCardModule } from '@angular/material/card';
+import { AuthService } from '@core/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -70,8 +78,8 @@ export class CalendarComponent
   dialogTitle: string;
   filterOptions = 'All';
   calendarData!: Calendar;
-  barberList:ICRMBarberResponse[] = [];
-  barberListFreeTime:ICRMBarberResponse[] = [];
+  barberList: ICRMResponse[] = [];
+  barberListFreeTime: ICRMResponse[] = [];
   ReservatioCalendarData!: ICRMCalendarResponse;
   filterItems: string[] = [
     'work',
@@ -96,7 +104,9 @@ export class CalendarComponent
     private fb: UntypedFormBuilder,
     private dialog: MatDialog,
     public calendarService: CalendarService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private router: Router
   ) {
     super();
     this.dialogTitle = 'Add New Event';
@@ -109,21 +119,43 @@ export class CalendarComponent
     this.loadAllReservation();
   }
 
-  loadAllReservation(){
-    this.calendarService.getReservation().then((reservation)=>{
-      this.ReservatioCalendarData = reservation;
-      //console.log(reservation);
-      this.calendarService.loadEvents(this.ReservatioCalendarData).then((events) => {
-        this.calendarEvents = events;
-        this.tempEvents = this.calendarEvents;
-        //console.log(this.calendarEvents);
-        this.calendarOptions.events = this.calendarEvents;
+  loadAllReservation() {
+    const dataClient: any | undefined = this.authService.getClientData();
 
-        if (this.calendarComponent) {
-          this.calendarComponent.getApi().refetchEvents(); // Calls FullCalendar's refetchEvents method
-        }
+    if (!dataClient) {
+      this.showNotification(
+        'snackbar-success',
+        'Buenas, tienes que autenticarte, por favor!',
+        'bottom',
+        'center'
+      );
+
+      this.router.navigate(['/authentication/signin']);
+
+      return;
+    }
+    const parameterReservation = {
+      NumRecordsPage: 10000,
+      IdClientAuth: dataClient.unique_name,
+    };
+
+    this.calendarService
+      .getReservation(parameterReservation)
+      .then((reservation) => {
+        this.ReservatioCalendarData = reservation;
+        this.calendarService
+          .loadEvents(this.ReservatioCalendarData)
+          .then((events) => {
+            this.calendarEvents = events;
+            this.tempEvents = this.calendarEvents;
+            //console.log(this.calendarEvents);
+            this.calendarOptions.events = this.calendarEvents;
+
+            if (this.calendarComponent) {
+              this.calendarComponent.getApi().refetchEvents();
+            }
+          });
       });
-    });
   }
 
   calendarOptions: CalendarOptions = {
@@ -151,31 +183,14 @@ export class CalendarComponent
   }
 
   addNewEvent() {
-     let barberListData:ICRMBarber [] = [];
-
-    /*this.calendarService.getBarber().then((resultBarbers) =>{
-    this.barberList = Array.isArray(resultBarbers) ? resultBarbers : [resultBarbers];
-    
-    }); */
-
-    const daySelected = new Date("2025-05-22");
-   
-    this.calendarService.getBarberFreeTime(daySelected,1).then((result) =>{
-      this.barberListFreeTime = Array.isArray(result) ? result : [result]; 
-      console.log(this.barberListFreeTime);
-    });
-   
-
+    let barberListData: ICRMBarber[] = [];
     let tempDirection: Direction;
+
     if (localStorage.getItem('isRtl') === 'true') {
       tempDirection = 'rtl';
     } else {
       tempDirection = 'ltr';
     }
-
-    this.barberList.forEach((resultData)=>{
-      barberListData = resultData.data;
-    });
 
     const dialogRef = this.dialog.open(FormDialogComponent, {
       width: '60vw',
@@ -183,7 +198,7 @@ export class CalendarComponent
       data: {
         calendar: this.calendar,
         action: 'add',
-        barberList: barberListData
+        barberList: barberListData,
       },
       direction: tempDirection,
     });
@@ -193,14 +208,14 @@ export class CalendarComponent
         this.calendarData = new Calendar(result);
         this.calendarEvents = this.calendarEvents?.concat({
           // add new event data. must create new array
-         /* id: this.calendarData.id,
-          title: this.calendarData.Tittle,
+          /* id: this.calendarData.id,
+          title: this.calendarData.Title,
           start: this.calendarData.startDate,
           end: this.calendarData.endDate,
           className: this.getClassNameValue(this.calendarData.category),
           groupId: this.calendarData.category,
           details: this.calendarData.details,*/
-        }); 
+        });
         this.calendarOptions.events = this.calendarEvents;
         this.addCusForm.reset();
         this.loadAllReservation();
@@ -250,6 +265,7 @@ export class CalendarComponent
     } else {
       tempDirection = 'ltr';
     }
+
     const dialogRef = this.dialog.open(FormDialogComponent, {
       width: '60vw',
       maxWidth: '100vw',
@@ -320,10 +336,11 @@ export class CalendarComponent
   createCalendarForm(calendar: Calendar): UntypedFormGroup {
     return this.fb.group({
       rervationId: [calendar.rervationId],
-      Tittle: [calendar.tittle, [Validators.required]],
+      Title: [calendar.title, [Validators.required]],
       Note: [calendar.note],
       Message: [calendar.message, [Validators.required]],
-      Apointment: [calendar.apointment, [Validators.required]],
+      StartDate: [calendar.startDate, [Validators.required]],
+      EndDate: [calendar.endDate, [Validators.required]],
       UserBarberId: [calendar.userBarberId],
       ClientId: [calendar.clientId],
       Price: [calendar.price],

@@ -11,7 +11,7 @@ namespace CRM.Infrastructure.Persistences.Context.Configurations
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.Tittle)
+            builder.Property(e => e.Title)
              .IsRequired()
              .HasMaxLength(1000)
              .IsUnicode(false);

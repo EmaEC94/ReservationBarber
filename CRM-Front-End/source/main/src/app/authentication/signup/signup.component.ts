@@ -1,24 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { NgClass } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '@core';
 @Component({
-    selector: 'app-signup',
-    templateUrl: './signup.component.html',
-    styleUrls: ['./signup.component.scss'],
-    imports: [
-        RouterLink,
-        FormsModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatFormFieldModule,
-        NgClass,
-        MatButtonModule,
-    ]
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
+  imports: [
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatFormFieldModule,
+    NgClass,
+    MatButtonModule,
+  ],
 })
 export class SignupComponent implements OnInit {
   loginForm!: UntypedFormGroup;
@@ -29,7 +36,7 @@ export class SignupComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private serviceAuth:AuthService
+    private serviceAuth: AuthService
   ) {}
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -46,15 +53,41 @@ export class SignupComponent implements OnInit {
     return this.loginForm.controls;
   }
   onSubmit() {
-    console.log('onSubmit');
-
     this.submitted = true;
     // stop here if form is invalid
 
     if (this.loginForm.invalid) {
       return;
     } else {
-      this.router.navigate(['/dashboard/main']);
+      debugger;
+       const formGroupData = this.loginForm.value;
+
+      const parametros = {
+        name: formGroupData.username,
+        email: formGroupData.email,
+        documentTypeId: 1,
+        companyId: 1,
+        documentNumber: '207770777',
+        address: 'En CQ San Carlos',
+        phone: '77777777',
+        sendNotifications: true,
+        state: 1,
+        userName: formGroupData.username,
+        password: formGroupData.password,
+      };
+
+      this.serviceAuth.registerClient(parametros).subscribe({
+            next: (response) => {
+              
+            },
+            error: (error) => {
+              console.log('Add Error:', error);
+              // Optionally display an error message to the user
+            },
+          });
+
+
+      this.router.navigate(['authentication/signin']);
     }
   }
 }

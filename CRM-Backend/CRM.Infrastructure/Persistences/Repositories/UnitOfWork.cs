@@ -16,8 +16,9 @@ namespace CRM.Infrastructure.Persistences.Repositories
 
         public IGenericRepository<DocumentType> _documentType = null!;
         public IClientRepository _client = null!;
-               //IClientInterface IUnitOfWork.Client => throw new NotImplementedException();
         public IGenericRepository<Company> _company = null!;
+        public IGenericRepository<Catalog> _catalog = null!;
+        public IGenericRepository<SubCatalog> _SubCatalog = null!;
         public IGenericRepository<ActivePause> _activePause = null!;
         public IReservationRepository _reservation = null!;
         public IUserRepository _user = null!;
@@ -39,7 +40,9 @@ namespace CRM.Infrastructure.Persistences.Repositories
 
         public DbContext Context => _context;
 
+        public IGenericRepository<SubCatalog> SubCatalog => _SubCatalog ?? new GenericRepository<SubCatalog>(_context);
 
+        public IGenericRepository<Catalog> Catalog => _catalog ?? new GenericRepository<Catalog>(_context);
 
         public IDbTransaction BeginTransaction()
         {

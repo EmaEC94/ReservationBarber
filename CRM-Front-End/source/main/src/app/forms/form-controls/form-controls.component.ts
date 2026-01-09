@@ -61,7 +61,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
         FormsModule,
         ReactiveFormsModule,
         MatIconModule,
-        FileUploadComponent,
         MatCheckboxModule,
         MatRadioModule,
         MatDatepickerModule,
@@ -74,7 +73,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class FormControlsComponent {
   // Form
   labelForm: UntypedFormGroup;
-  fileUploadForm: UntypedFormGroup;
   hideRequiredControl = new UntypedFormControl(false);
   floatLabelControl = new UntypedFormControl('auto');
   // checkbox
@@ -181,9 +179,7 @@ export class FormControlsComponent {
     this.labelForm = fb.group({
       hideRequired: this.hideRequiredControl,
     });
-    this.fileUploadForm = fb.group({
-      uploadFile: [''],
-    });
+
   }
   myFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();

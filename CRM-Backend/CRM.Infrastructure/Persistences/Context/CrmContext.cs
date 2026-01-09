@@ -16,15 +16,16 @@ namespace CRM.Infrastructure.Persistences.Context
 
         public virtual DbSet<Client> Clients { get; set; } = null!;
         public virtual DbSet<DocumentType> DocumentTypes { get; set; } = null!;
-
         public virtual DbSet<ActivePause> ActivePause { get; set; } = null!;
         public virtual DbSet<Company> Company { get; set; } = null!;
+        public virtual DbSet<SubCatalog> Catalogo { get; set; } = null!;
+        public virtual DbSet<SubCatalog> SubCatalogo { get; set; } = null!;
         public virtual DbSet<Notification> Notifications { get; set; } = null!;
-
         public virtual DbSet<Role> Roles { get; set; }= null!;
         public virtual DbSet<User> Users { get; set; } = null !;
         public virtual DbSet<UserRole> UserRoles { get; set; } = null!;
         public virtual DbSet<Reservation> Reservations { get; set; } = null!;
+        public virtual DbSet<UserException> UserException { get; set; } = null!;
 
         public Task<IQueryable<T>> ExecuteStoredProcedure<T>(string procedureName, params SqlParameter[] parameters)
         {

@@ -10,15 +10,15 @@
                   <div>
                     <a routerLink="" class="logo"
                       ><img
-                        class="logo-z"
-                        src="assets/images/pages/logo.png"
+                        class="logo-z logo"
+                        src="assets/images/pages/logo1.webp"
                         alt="logo-full"
                     /></a>
                   </div>
                   <h4 class="font-20 mt-4">Bienvenido a Barber Destiny</h4>
                   <p class="text-muted">Autentícate para poder acceder.</p>
                 </div>
-                <div class="p-2 mt-5">
+                <div class="p-2">
                   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     @if (error) {
                     <div class="alert alert-danger mb-3 mt-0">{{ error }}</div>
@@ -121,21 +121,6 @@
                     <li class="list-inline-item m-2">
                       <a href="javascript:void(0)" class="rounded">
                         <i class="fab fa-google"></i>
-                      </a>
-                    </li>
-                    <li class="list-inline-item m-2">
-                      <a href="javascript:void(0)" class="rounded flex-c-m">
-                        <i class="fab fa-facebook-f"></i>
-                      </a>
-                    </li>
-                    <li class="list-inline-item m-2">
-                      <a href="javascript:void(0)" class="rounded">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </li>
-                    <li class="list-inline-item m-2">
-                      <a href="javascript:void(0)" class="rounded">
-                        <i class="fab fa-linkedin-in"></i>
                       </a>
                     </li>
                   </ul>

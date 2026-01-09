@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\Emanuel\Documents\publishBarber</_PublishTargetUrl>
+    <History>True|2026-01-08T03:06:34.2376983Z||;True|2025-11-05T20:02:49.2628704-06:00||;True|2025-11-05T18:20:07.5928606-06:00||;True|2025-11-05T17:41:57.3715225-06:00||;True|2025-11-05T17:24:13.4427165-06:00||;True|2025-07-03T22:51:11.7344278-06:00||;True|2025-07-03T22:46:29.6729832-06:00||;True|2025-07-03T21:43:49.7092667-06:00||;True|2025-07-02T22:25:23.7000238-06:00||;True|2025-07-02T22:05:15.1895894-06:00||;True|2025-07-02T21:15:10.2543832-06:00||;True|2025-06-30T20:37:13.8647515-06:00||;True|2025-06-29T17:15:51.0789054-06:00||;True|2025-06-29T17:14:26.4216755-06:00||;True|2025-06-29T16:54:38.6217216-06:00||;True|2025-05-28T18:17:13.4503391-06:00||;</History>
+    <LastFailureDetails />
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="CRMConnectionServer">
+      <Value>ae1e3b60-3bef-468c-a5c5-64bba7c0c1cd</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>
